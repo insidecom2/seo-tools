@@ -13,8 +13,6 @@ export default function Home() {
         <meta name="description" content="Login" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-   
     </div>
   )
 }
