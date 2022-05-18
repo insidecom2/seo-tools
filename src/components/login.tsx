@@ -2,7 +2,10 @@
 import { useState } from 'react';
 import { Card, Col, Container, Form, Row, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import Http from '../utils/http';
+import { HTTP_STATUS_CODE } from '../utils/constants'
+import Cookies from 'js-cookie';
 
 export interface dataFormData {
     email: string
@@ -14,9 +17,26 @@ export default function Login() {
     const [alert, setAlert] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
-    const handleSubmit = (e) => {
-        setLoading(true);
+    const handleSubmit = async (e) => {
+
         e.preventDefault();
+        if (loading == false) {
+            setLoading(true);
+            try {
+                const response: any = await Http.post('/api/login', formData)
+                if (response.status === HTTP_STATUS_CODE.OK) {
+                    if (response.data.status) {
+                        Cookies.set('token' ,response.data.token)
+                    } else {
+                        setAlert(response.data.message)                      
+                    }
+                } 
+
+            } catch (error) {
+
+            }
+            setLoading(false);
+        }
     }
     const handleChange = (ele) => {
         const { name, value } = ele.target;
@@ -46,7 +66,7 @@ export default function Login() {
                                 </Form.Group>
                                 <Form.Group className="form-outline mb-4" controlId="formBasicPassword">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control name='password' type="password" placeholder="Enter password" />
+                                    <Form.Control name='password' type="password" onChange={handleChange} placeholder="Enter password" />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                                     <Form.Check type="checkbox" name='rememberPassword' onChange={handleChange} label="Remember password" />
@@ -55,11 +75,12 @@ export default function Login() {
                                     Login
                                 </Button>
                             </Form>
-                            {loading ?
-                                <div className='py-3 text-center'>
-                                    <FontAwesomeIcon icon={faSpinner} spin /> <span>Loading</span>
-                                </div>
-                                : ''}
+
+                            {loading && (<div className='py-3 text-center'><FontAwesomeIcon icon={faSpinner} spin /> <span>Loading</span> </div>)}
+
+                            {alert != '' && (<div className='py-3 text-center'>
+                                <span>{alert}</span>
+                            </div>)}
                         </Card.Body>
                     </Card>
                 </Col>
