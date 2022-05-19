@@ -30,9 +30,9 @@ export default function Login() {
                         Cookies.set('token', response.data.token)
                         router.push('/tracking')
                     } else {
-                        setAlert(response.data.message)                      
+                        setAlert(response.data.message)
                     }
-                } 
+                }
 
             } catch (error) {
 
