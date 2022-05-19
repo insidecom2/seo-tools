@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import {HTTP_STATUS_CODE} from '../utils/constants'
-
+import { useRouter } from 'next/router'
 const Http = axios.create({
     baseURL: '',
     timeout: 30000,
@@ -34,13 +34,14 @@ Http.interceptors.request.use(
       return response
     },
     function (error) {
+    const router = useRouter()
       if (
         error != null &&
         error.response != null &&
         error.response.status === HTTP_STATUS_CODE.UNAUTHORIZED
       ) {
           Cookies.remove('token')
-          //window.location = '/login';
+          router.push('/index');
       }
       return Promise.reject(error)
     }

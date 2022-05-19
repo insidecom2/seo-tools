@@ -6,6 +6,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import Http from '../utils/http';
 import { HTTP_STATUS_CODE } from '../utils/constants'
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router'
 
 export interface dataFormData {
     email: string
@@ -16,17 +17,18 @@ export default function Login() {
     const [formData, setFormData] = useState<dataFormData>();
     const [alert, setAlert] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
-
+    const router = useRouter()
     const handleSubmit = async (e) => {
-
         e.preventDefault();
         if (loading == false) {
+            setAlert('')
             setLoading(true);
             try {
                 const response: any = await Http.post('/api/login', formData)
                 if (response.status === HTTP_STATUS_CODE.OK) {
                     if (response.data.status) {
-                        Cookies.set('token' ,response.data.token)
+                        Cookies.set('token', response.data.token)
+                        router.push('/tracking')
                     } else {
                         setAlert(response.data.message)                      
                     }
