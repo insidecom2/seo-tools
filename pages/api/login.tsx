@@ -8,6 +8,7 @@ import validate from "../../src/lib/middlewares/validation";
 const schema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
+    rememberPassword: Joi.number()
 });
   
 export default validate({ body: schema }, (req: NextApiRequest, res: NextApiResponse) =>{

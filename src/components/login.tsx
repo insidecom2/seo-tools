@@ -14,7 +14,12 @@ export interface dataFormData {
     rememberPassword: number
 }
 export default function Login() {
-    const [formData, setFormData] = useState<dataFormData>();
+    const defaultForm: dataFormData = {
+        email: '',
+        password: '',
+        rememberPassword: 0
+    }
+    const [formData, setFormData] = useState<dataFormData>(defaultForm);
     const [alert, setAlert] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter()
@@ -64,11 +69,11 @@ export default function Login() {
                             <Form onSubmit={(e) => handleSubmit(e)}>
                                 <Form.Group className="form-outline mb-4" controlId="formBasicEmail">
                                     <Form.Label>Email address</Form.Label>
-                                    <Form.Control name='email' type="email" placeholder="Enter email" onChange={handleChange} />
+                                    <Form.Control name='email' autoComplete='off' type="email" value={formData.email} placeholder="Enter email" onChange={handleChange} />
                                 </Form.Group>
-                                <Form.Group className="form-outline mb-4" controlId="formBasicPassword">
+                                <Form.Group className="form-outline mb-4"   controlId="formBasicPassword">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control name='password' type="password" onChange={handleChange} placeholder="Enter password" />
+                                    <Form.Control name='password' autoComplete='off' type="password" value={formData.password} onChange={handleChange} placeholder="Enter password" />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                                     <Form.Check type="checkbox" name='rememberPassword' onChange={handleChange} label="Remember password" />
