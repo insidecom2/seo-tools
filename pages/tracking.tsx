@@ -1,3 +1,5 @@
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import NavbarTop from '../src/components/nav'
@@ -13,23 +15,23 @@ export default function Tracking() {
 
     const [formData, setFormData] = useState<dataFormData>({ keyword: '', url: '' })
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [position, setPosition] = useState<string>('0')
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!isLoading) {
-            setIsLoading(true)  
+        if (!isLoading && e.target.checkValidity()) {
+            setIsLoading(true)
             try {
                 const response: any = await Http.post('/api/tools/check_rang', formData)
                 if (response.status === HTTP_STATUS_CODE.OK) {
                     if (response.data.status) {
-                       
-                    } else {
-                        
+                        setPosition(response.data.data.position ?? 0)
                     }
                 }
                 setIsLoading(false)
 
             } catch (error) {
-
+                setPosition(error.message)
+                setIsLoading(false)
             }
         }
     }
@@ -51,18 +53,19 @@ export default function Tracking() {
                         <Form onSubmit={(e) => handleSubmit(e)}>
                             <Form.Group className="form-outline mb-4" controlId="formBasicEmail">
                                 <Form.Label>Keyword</Form.Label>
-                                <Form.Control name='keyword' type="text"  placeholder="Enter keyword" onChange={handleChange} />
+                                <Form.Control name='keyword' type="text" required placeholder="Enter keyword" onChange={handleChange} />
                             </Form.Group>
                             <Form.Group className="form-outline mb-4" controlId="formBasicPassword">
                                 <Form.Label>Url</Form.Label>
-                                <Form.Control name='url' type="text" onChange={handleChange} placeholder="Enter url" />
+                                <Form.Control name='url' type="text" required onChange={handleChange} placeholder="Enter url" />
                             </Form.Group>
-                            
+
                             <Button variant="info" className='w-50' type="submit">
                                 Search
                             </Button>
                             <div className='py-4'>
-                                Result :
+                                Result : {isLoading && (<span><FontAwesomeIcon icon={faSpinner} spin /> Loading</span>)}
+                                {!isLoading && (position)}
                             </div>
                         </Form>
                     </Col>

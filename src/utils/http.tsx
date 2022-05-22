@@ -40,8 +40,8 @@ Http.interceptors.response.use(
       error.response.status === HTTP_STATUS_CODE.UNAUTHORIZED
     ) {
       Cookies.remove('token')
-      window.location = '/'
-      return 
+      window.location.href = '/'
+      return
     }
     return Promise.reject(error)
   }

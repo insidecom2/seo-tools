@@ -10,48 +10,50 @@ const AXIOS_OPTIONS = {
 };
 
 export interface DataTransfer {
-    keyword: string,
-    url: string,
-    limit : number
+  keyword: string,
+  url: string,
+  limit: number
 }
-const searchKeyword = (data : DataTransfer) =>
-{
-    const { keyword, url, limit } = data;
+const searchKeyword = (data: DataTransfer) => {
+  const { keyword, url, limit } = data;
 
-    const encodedString = encodeURI(keyword);
+  const encodedString = encodeURI(keyword);
+  try {
     return axios
-        .get(
+      .get(
         `https://www.google.com/search?q=${encodedString}&hl=th&gl=th&start=${limit}`,
         AXIOS_OPTIONS
-        )
-    .then(function ({ data }) {
-      let $ = cheerio.load(data);
+      )
+      .then(function ({ data }) {
+        let $ = cheerio.load(data);
 
-      const links = [];
-      const titles = [];
-      const snippets = [];
+        const links = [];
+        const titles = [];
+        const snippets = [];
 
-      $(".yuRUbf > a").each((i, el) => {
-        links[i] = $(el).attr("href");
+        $(".yuRUbf > a").each((i, el) => {
+          links[i] = $(el).attr("href");
+        });
+        $(".yuRUbf > a > h3").each((i, el) => {
+          titles[i] = $(el).text();
+        });
+        $(".IsZvec").each((i, el) => {
+          snippets[i] = $(el).text().trim();
+        });
+
+        let result: any = {};
+        for (let i = 0; i < links.length; i++) {
+          if (links[i].search(url) >= 0 && !result?.position) {
+            result = { position: (i + limit + 1) }
+          }
+
+        }
+        return result;
       });
-      $(".yuRUbf > a > h3").each((i, el) => {
-        titles[i] = $(el).text();
-      });
-      $(".IsZvec").each((i, el) => {
-        snippets[i] = $(el).text().trim();
-      });
 
-      const result = [];
-      for (let i = 0; i < links.length; i++) {
-        result[i] = {
-          link: links[i],
-          title: titles[i],
-          snippet: snippets[i],
-        };
-      }
-
-      console.log(result);
-    });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export default searchKeyword

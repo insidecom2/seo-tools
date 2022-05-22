@@ -1,22 +1,21 @@
 
 
-import { NextApiRequest } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 const jwt = require('jsonwebtoken');
 
-const AuthAdmin = async (req: NextApiRequest)=>{
+const AuthAdmin = async (req: NextApiRequest, res: NextApiResponse)=>{
     const header = req.headers;
    
     if (!header.authorization) {
-        return false;
+         res.status(401).send(401);
     }
     try {
         const token = header.authorization.replace("Bearer ", "");
         return await jwt.verify(token, process.env.NEXT_JWT_SECERT);
     } catch (error) {
-        return false;
+        res.status(401).send(401);
     }
- 
-    return true;
+        res.status(401).send(401);
 }
 
 export default AuthAdmin;

@@ -25,7 +25,7 @@ export default function Login() {
     const router = useRouter()
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (loading == false) {
+        if (loading == false && e.target.checkValidity()) {
             setAlert('')
             setLoading(true);
             try {

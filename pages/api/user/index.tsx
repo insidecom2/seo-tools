@@ -3,12 +3,8 @@ import AuthAdmin from '../../../src/lib/middlewares/AuthAdmin';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse ) => {
 
-    const checkAUth: any = await AuthAdmin(req);
-    if (!checkAUth) {
-            return res.status(401).json({
-            status: false,
-        });
-    }
+    const checkAUth: any = await AuthAdmin(req,res);
+    
     if (req.method == 'GET') {
 
         return res.status(200).json({
