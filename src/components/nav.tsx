@@ -11,12 +11,20 @@ export default function NavbarTop() {
         callApi();
     }, [])
     const callApi = async () => {
-        const res: any = await Http.get(`/api/user`)
-        setUserData(res.data.data)
+         await Http.get(`/api/user`).then(response => {
+            if(response) setUserData(response.data.data)
+         }).catch(e => {
+            
+        });
+       
     }
 
     const handleLogout = async (e) => {
-        await Http.post(`/api/logout`)
+        await Http.post(`/api/logout`).then(response => {
+          
+        }).catch(e => {
+            
+        });
     }
 
     return (
