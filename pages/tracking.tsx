@@ -1,7 +1,6 @@
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { useState } from 'react';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap'
+import { Button, Col, Container, Form, Row , Spinner } from 'react-bootstrap'
 import NavbarTop from '../src/components/nav'
 import { HTTP_STATUS_CODE } from '../src/utils/constants';
 import Http from '../src/utils/http';
@@ -64,7 +63,14 @@ export default function Tracking() {
                                 Search
                             </Button>
                             <div className='py-4'>
-                                Result : {isLoading && (<span><FontAwesomeIcon icon={faSpinner} spin /> Loading</span>)}
+                                Result : {isLoading && (<span>
+                                    <Spinner
+                                        as="span"
+                                        variant="success"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                        animation="border" /> Loading</span>)}
                                 {!isLoading && (position)}
                             </div>
                         </Form>

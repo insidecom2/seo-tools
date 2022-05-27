@@ -1,8 +1,6 @@
 
 import { useState } from 'react';
-import { Card, Col, Container, Form, Row, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { Card, Col, Container, Form, Row, Button ,Spinner} from 'react-bootstrap';
 import Http from '../utils/http';
 import { HTTP_STATUS_CODE } from '../utils/constants'
 import Cookies from 'js-cookie';
@@ -83,7 +81,14 @@ export default function Login() {
                                 </Button>
                             </Form>
 
-                            {loading && (<div className='py-3 text-center'><FontAwesomeIcon icon={faSpinner} spin /> <span>Loading</span> </div>)}
+                            {loading && (<div className='py-3 text-center'>
+                                <Spinner
+                                        as="span"
+                                        variant="success"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                        animation="border" /> <span>Loading</span> </div>)}
 
                             {alert != '' && (<div className='py-3 text-center'>
                                 <span>{alert}</span>
