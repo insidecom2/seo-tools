@@ -2,9 +2,9 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import NavbarTop from '../src/components/nav'
-import { HTTP_STATUS_CODE } from '../src/utils/constants';
-import Http from '../src/utils/http';
+import NavbarTop from '../../src/components/nav'
+import { HTTP_STATUS_CODE } from '../../src/utils/constants';
+import Http from '../../src/utils/http';
 
 export interface dataFormData {
     keyword: string,

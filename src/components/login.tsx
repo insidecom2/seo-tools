@@ -33,7 +33,7 @@ export default function Login() {
                 if (response.status === HTTP_STATUS_CODE.OK) {
                     if (response.data.status) {
                         Cookies.set('token', response.data.token)
-                        router.push('/tracking')
+                        router.push('/dashboard/tracking')
                     } else {
                         setAlert(response.data.message)
                     }
@@ -71,7 +71,7 @@ export default function Login() {
                                     <Form.Label>Email address</Form.Label>
                                     <Form.Control name='email' autoComplete='off' type="email" value={formData.email} placeholder="Enter email" onChange={handleChange} />
                                 </Form.Group>
-                                <Form.Group className="form-outline mb-4"   controlId="formBasicPassword">
+                                <Form.Group className="form-outline mb-4" controlId="formBasicPassword">
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control name='password' autoComplete='off' type="password" value={formData.password} onChange={handleChange} placeholder="Enter password" />
                                 </Form.Group>
