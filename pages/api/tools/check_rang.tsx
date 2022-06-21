@@ -1,7 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import searchKeyword from '../../../src/lib/google/SearchTracking';
+import AuthAdmin from '../../../src/lib/middlewares/AuthAdmin';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    
+    const checkAUth: any = await AuthAdmin(req );
+    if (!checkAUth) {
+        return res.status(401).json({
+            status: false
+        })
+    }
+
     switch (req.method) {
         case 'POST':
             return checkRang(req, res);
