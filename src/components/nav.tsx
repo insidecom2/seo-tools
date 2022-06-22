@@ -34,7 +34,12 @@ export default function NavbarTop() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/dashboard/tracking">Rank Tracking</Nav.Link>
+                        <NavDropdown title="Rank Tracker" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/dashboard/tracking">Rank Tracking (Manual)</NavDropdown.Item>
+                            {/* <NavDropdown.Item href="#action/3.2">Add Tracker domain&keyword</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="#action/3.3">Reports</NavDropdown.Item> */}
+                        </NavDropdown>
                     </Nav>
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>Welcome : {userData?.name} [<span className='pointer' onClick={handleLogout}>Logout</span>]</Navbar.Text>
