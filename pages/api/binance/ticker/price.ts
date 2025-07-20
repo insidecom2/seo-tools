@@ -9,9 +9,13 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       const { symbol } = req.query;
-      const data: any = await getPriceBinance(symbol as string); // BTCUSDT
-      const nowISO = new Date().toISOString();
-      return res.status(200).json({ price: data.price, timeStamp: nowISO });
+      try {
+        const data: any = await getPriceBinance(symbol as string); // BTCUSDT
+        const nowISO = new Date().toISOString();
+        return res.status(200).json({ price: data.price, timeStamp: nowISO });
+      } catch (error) {
+        return res.status(500).end(error);
+      }
     default:
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
