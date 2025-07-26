@@ -13,8 +13,8 @@ export default async function handler(
       }
 
       try {
-        const price = await getPriceBinance(symbol);
-        return res.status(200).json({ symbol: symbol, price: price });
+        const dataResp = await getPrice(symbol);
+        return res.status(200).json(dataResp);
       } catch (error: any) {
         console.error("API Error:", error);
         return res
@@ -27,22 +27,16 @@ export default async function handler(
   }
 }
 
-const getPriceBinance = async (symbol: string) => {
-  const API_KEY = process.env.BINANCE_API_KEY;
+const getPrice = async (symbol: string) => {
+  const BASE_URL =
+    "https://api.bybit.com/v5/market/tickers?category=spot&symbol=";
 
-  const BASE_URL = "https://api.binance.com";
-  const endpoint = "/api/v3/ticker";
-
-  const url = `${BASE_URL}${endpoint}/price?symbol=${symbol}`;
+  const url = `${BASE_URL}${symbol}`;
 
   try {
-    const response = await axios.get(url, {
-      headers: {
-        "X-MBX-APIKEY": API_KEY,
-      },
-    });
-
-    return response.data.price;
+    const response = await axios.get(url);
+    console.log("response >>>>>>", response.data);
+    return response.data.result.list[0];
   } catch (error) {
     console.log("ERROR >>>>>>", error.message);
     return null;
