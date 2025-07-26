@@ -1,6 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 
+export const config = {
+  runtime: "edge",
+  regions: ["hkg1", "sin1"], // Asia regions allowed by Binance
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

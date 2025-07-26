@@ -1,9 +1,0 @@
-{
-  "functions": {
-    "api/binance/ticker/price.ts": {
-      "memory": 128,
-      "maxDuration": 10,
-      "region": "sin1"
-    }
-  }
-}
