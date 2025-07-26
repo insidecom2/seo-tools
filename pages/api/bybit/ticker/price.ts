@@ -35,7 +35,6 @@ const getPrice = async (symbol: string) => {
 
   try {
     const response = await axios.get(url);
-    console.log("response >>>>>>", response.data);
     return response.data.result.list[0];
   } catch (error) {
     console.log("ERROR >>>>>>", error.message);
