@@ -13,9 +13,8 @@ export default async function handler(
       }
 
       try {
-        const data = await getPriceBinance(symbol);
-        const nowISO = new Date().toISOString();
-        return res.status(200).json({ price: data.price, timeStamp: nowISO });
+        const price = await getPriceBinance(symbol);
+        return res.status(200).json({ symbol: symbol, price: price });
       } catch (error: any) {
         console.error("API Error:", error);
         return res
@@ -29,13 +28,23 @@ export default async function handler(
 }
 
 const getPriceBinance = async (symbol: string) => {
+  const API_KEY = process.env.BINANCE_API_KEY;
+
+  const BASE_URL = "https://api.binance.com";
+  const endpoint = "/api/v3/ticker";
+
+  const url = `${BASE_URL}${endpoint}/price?symbol=${symbol}`;
+
   try {
-    const response = await axios.get(
-      `https://api.binance.com/api/v3/ticker/price?symbol=${symbol}`
-    );
-    return response.data;
-  } catch (error: any) {
-    console.error("Binance Error:", error?.response?.data || error.message);
-    throw new Error("Failed to fetch price from Binance");
+    const response = await axios.get(url, {
+      headers: {
+        "X-MBX-APIKEY": API_KEY,
+      },
+    });
+
+    return response.data.price;
+  } catch (error) {
+    console.log("ERROR >>>>>>", error.message);
+    return null;
   }
 };
