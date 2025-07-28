@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
+import { getPriceBinance } from "../../../../src/lib/query/price";
 
 export default async function handler(
   req: NextApiRequest,
@@ -26,25 +26,3 @@ export default async function handler(
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
-
-const getPriceBinance = async (symbol: string) => {
-  const API_KEY = process.env.BINANCE_API_KEY;
-
-  const BASE_URL = "https://api.binance.com";
-  const endpoint = "/api/v3/ticker";
-
-  const url = `${BASE_URL}${endpoint}/price?symbol=${symbol}`;
-
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        "X-MBX-APIKEY": API_KEY,
-      },
-    });
-
-    return response.data.price;
-  } catch (error) {
-    console.log("ERROR >>>>>>", error.message);
-    return null;
-  }
-};

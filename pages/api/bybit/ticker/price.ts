@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
+import { getByBitPrice } from "../../../../src/lib/query/price";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,7 +13,7 @@ export default async function handler(
       }
 
       try {
-        const dataResp = await getPrice(symbol);
+        const dataResp = await getByBitPrice(symbol);
         return res.status(200).json(dataResp);
       } catch (error: any) {
         console.error("API Error:", error);
@@ -26,18 +26,3 @@ export default async function handler(
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
-
-const getPrice = async (symbol: string) => {
-  const BASE_URL =
-    "https://api.bybit.com/v5/market/tickers?category=spot&symbol=";
-
-  const url = `${BASE_URL}${symbol}`;
-
-  try {
-    const response = await axios.get(url);
-    return response.data.result.list[0];
-  } catch (error) {
-    console.log("ERROR >>>>>>", error.message);
-    return null;
-  }
-};
