@@ -8,13 +8,16 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       try {
-        const prisma = new PrismaClient();
-        const goldPrice = await prisma.tb_price.findFirst({
-          orderBy: {
-            f_datetime: "desc",
-          },
-        });
-        return res.status(200).json(goldPrice);
+        const mysql = require("mysql2/promise");
+        const url = process.env.DATABASE_URL;
+        const connection = await mysql.createConnection(url);
+
+        const [goldPrice] = await connection.execute(
+          "SELECT * from tb_price order by f_datetime desc limit 0,1"
+        );
+
+        await connection.end();
+        return res.status(200).json(goldPrice[0]);
       } catch (error: any) {
         console.error("API Error:", error);
         return res
