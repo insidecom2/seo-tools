@@ -9,7 +9,11 @@ export default async function handler(
     case "GET":
       try {
         const prisma = new PrismaClient();
-        const goldPrice = await prisma.tb_price.findFirst();
+        const goldPrice = await prisma.tb_price.findFirst({
+          orderBy: {
+            f_datetime: "desc",
+          },
+        });
         return res.status(200).json(goldPrice);
       } catch (error: any) {
         console.error("API Error:", error);
