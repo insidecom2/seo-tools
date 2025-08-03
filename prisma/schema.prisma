@@ -1,26 +1,15 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
-  shadowDatabaseUrl = env("DATABASE_URL")
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  password  String?
-  name      String?
-  role      Role     @default(USER)
-}
-
-enum Role {
-  USER
-  ADMIN
+model tb_price {
+  f_id       Int       @id @default(autoincrement())
+  f_symbol   String?   @db.VarChar(100)
+  f_price    Float?    @db.Float
+  f_datetime DateTime? @db.Timestamp(0)
 }

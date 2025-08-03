@@ -23,6 +23,7 @@
     "joi": "^17.6.0",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
+    "mysql2": "^3.14.3",
     "next": "12.1.6",
     "next-joi": "^2.2.1",
     "nprogress": "^0.2.0",
