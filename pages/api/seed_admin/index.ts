@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getUserByRole, register } from "../../src/processers/auth";
+
 import * as bcrypt from "bcrypt";
+import { getUserByRole, register } from "../../../src/processers/auth";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
