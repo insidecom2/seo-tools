@@ -3,8 +3,8 @@ import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 const jwt = require("jsonwebtoken");
 import Joi from "joi";
-import validate from "../../../src/lib/middlewares/validation";
-import { getUserByEmail } from "../../../src/processers/auth";
+import validate from "@/src/lib/middlewares/validation";
+import { getUserByEmail } from "@/src/processers/auth";
 
 const schema = Joi.object({
   email: Joi.string().email().required(),

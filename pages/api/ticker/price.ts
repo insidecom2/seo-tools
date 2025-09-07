@@ -1,6 +1,6 @@
 import { symbol } from "joi";
 import { NextApiRequest, NextApiResponse } from "next/types";
-import { getByBitPrice, getFinnHub } from "../../../src/lib/query/price";
+import { getByBitPrice, getFinnHub } from "@/src/lib/query/price";
 
 export default async function handler(
   req: NextApiRequest,

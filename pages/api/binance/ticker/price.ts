@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getPriceBinance } from "../../../../src/lib/query/price";
+import { getPriceBinance } from "@/src/lib/query/price";
 
 export default async function handler(
   req: NextApiRequest,
