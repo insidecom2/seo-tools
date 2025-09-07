@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 
 const AuthAdmin = async (req: NextApiRequest) => {
   const header = req.headers;
-
   if (!header?.authorization) {
     return false;
   }

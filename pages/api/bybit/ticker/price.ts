@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getByBitPrice } from "../../../../src/lib/query/price";
+import { getByBitPrice } from "@/src/lib/query/price";
 
 export default async function handler(
   req: NextApiRequest,

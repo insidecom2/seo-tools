@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import searchKeyword from "../../../src/lib/google/SearchTracking";
-import AuthAdmin from "../../../src/lib/middlewares/AuthAdmin";
+import searchKeyword from "@/src/lib/google/SearchTracking";
+import AuthAdmin from "@/src/lib/middlewares/AuthAdmin";
 
 export default async function handler(
   req: NextApiRequest,
