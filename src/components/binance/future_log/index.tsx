@@ -48,18 +48,18 @@ export const FutureLogsComm = () => {
 
   return (
     <div className="pt-2">
-      <Row>
-        <Col md={1}>
+      <Row className="pb-3">
+        <Col xs={1}>
           <Button onClick={() => changePageStep("left")}>
             <FontAwesomeIcon icon={faChevronLeft} />
           </Button>
         </Col>
-        <Col md={10}>
-          <h2>
+        <Col xs={10}>
+          <h2 className="px-2 ">
             Future Logs ({paginationTable.page}/{pagination?.page_all})
           </h2>
         </Col>
-        <Col md={1} className="text-end">
+        <Col xs={1} className="text-end">
           <Button onClick={() => changePageStep("right")}>
             <FontAwesomeIcon icon={faChevronRight} />
           </Button>
