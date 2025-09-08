@@ -18,6 +18,7 @@ const BinanceHistoryComm = () => {
   return (
     <div>
       <h2>History </h2>
+      <Filter />
       {isLoading ? (
         <LoadingIcon />
       ) : (
@@ -25,13 +26,8 @@ const BinanceHistoryComm = () => {
           <div>Profit: {CurrencyFormat(lists?.totalPnL ?? 0)}</div>
           <div>Win rate: {DecimalFormat(lists?.winRatePercentage ?? 0)}%</div>
           <div>Lose rate: {DecimalFormat(lists?.loseRatePercentage ?? 0)}%</div>
+          <TableLists currentData={lists?.histories} />
         </>
-      )}
-      <Filter />
-      {isLoading ? (
-        <LoadingIcon />
-      ) : (
-        <TableLists currentData={lists?.histories} />
       )}
     </div>
   );

@@ -30,7 +30,7 @@ export const Filter = () => {
     setFormData({ symbol: symbol, monthYear: monthYear });
   }, [symbol, monthYear]);
   return (
-    <div className="pt-4">
+    <div className="pt-2">
       <Form onSubmit={(e) => handleSubmit(e)}>
         <Row>
           <Col md={4}>
