@@ -83,6 +83,8 @@ export const FutureLogsComm = () => {
                 <th>EMA_L</th>
                 <th>LIMIT ORDER</th>
                 <th>CURRENT PRICE</th>
+                <th>VOLUME LAST 20</th>
+                <th>VOLUME LASTED</th>
                 <th>SIGNAL</th>
               </tr>
             </thead>
@@ -112,6 +114,8 @@ export const FutureLogsComm = () => {
                       <td>{body.ema_l_last.toFixed(6)}</td>
                       <td>{body.trend_order_limit}</td>
                       <td>{body.current_price.toFixed(6)}</td>
+                      <td>{body?.volume_last_20?.toFixed(6)}</td>
+                      <td>{body?.volume_lasted?.toFixed(6)}</td>
                       <td>{body.signal}</td>
                     </tr>
                   );
