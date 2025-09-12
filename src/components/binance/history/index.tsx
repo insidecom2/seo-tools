@@ -23,6 +23,11 @@ const BinanceHistoryComm = () => {
         <LoadingIcon />
       ) : (
         <>
+          <div>Balance current: {CurrencyFormat(lists?.balance ?? 0)}</div>
+          <div>
+            Funding:
+            {CurrencyFormat((lists?.balance ?? 0) - (lists?.totalPnL ?? 0))}
+          </div>
           <div>Profit: {CurrencyFormat(lists?.totalPnL ?? 0)}</div>
           <div>Win rate: {DecimalFormat(lists?.winRatePercentage ?? 0)}%</div>
           <div>Lose rate: {DecimalFormat(lists?.loseRatePercentage ?? 0)}%</div>
