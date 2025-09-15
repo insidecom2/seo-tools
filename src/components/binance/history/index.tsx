@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import useHistory from "./hook/useHistory";
-import { CurrencyFormat, DecimalFormat } from "@/src/utils/format";
-import { LoadingIcon } from "../../common/loading";
-import { TableLists } from "./list";
-import { Filter } from "./filter";
 import { useHistoryFilterStore } from "@/src/stores/history_filter";
+import { CurrencyFormat, DecimalFormat } from "@/src/utils/format";
+import { useEffect } from "react";
+import { LoadingIcon } from "../../common/loading";
+import { Filter } from "./filter";
+import useHistory from "./hook/useHistory";
+import { TableLists } from "./list";
 
 const BinanceHistoryComm = () => {
   const { isLoading, getPositionHistory, lists } = useHistory();
@@ -15,6 +15,10 @@ const BinanceHistoryComm = () => {
       getPositionHistory({ symbol: symbol, monthYear: monthYear });
   }, [symbol, monthYear]);
 
+  const balance = lists?.balance ?? 0;
+  const funding = lists?.funding ?? 0;
+  const percentTP = DecimalFormat(((balance - funding) / funding) * 100);
+  const displayPerTP = balance > funding ? "text-success" : "text-danger";
   return (
     <div>
       <h2>History </h2>
@@ -23,10 +27,13 @@ const BinanceHistoryComm = () => {
         <LoadingIcon />
       ) : (
         <>
-          <div>Balance current: {CurrencyFormat(lists?.balance ?? 0)}</div>
+          <div>
+            Balance current: {CurrencyFormat(balance)} (
+            <span className={displayPerTP}>{percentTP}%</span>)
+          </div>
           <div>
             Funding:
-            {CurrencyFormat((lists?.balance ?? 0) - (lists?.totalPnL ?? 0))}
+            {CurrencyFormat(funding)}
           </div>
           <div>Profit: {CurrencyFormat(lists?.totalPnL ?? 0)}</div>
           <div>Win rate: {DecimalFormat(lists?.winRatePercentage ?? 0)}%</div>

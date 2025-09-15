@@ -1,6 +1,5 @@
-import { Binance } from "binance-api-node";
+import { getBalance } from "@/src/processers/balance";
 import { binanceConnection } from "./connect";
-import { symbol } from "joi";
 
 interface IBinance {
   symbol: string;
@@ -72,16 +71,23 @@ const getBinanceFuturePositionHistory = async ({
   return {
     histories: sortedIncome,
     totalPnL,
-    balance: await getBalance(client),
+    balance: await getBalanceFromBNB(client),
+    funding: await getBalanceFromDb(
+      `${year}-${String(month).padStart(2, "0")}`
+    ),
     winRatePercentage: (winRateRow / sortedIncome.length) * 100,
     loseRatePercentage: (loseRateRow / sortedIncome.length) * 100,
   };
 };
 
-const getBalance = async (client: any, symbol: string = "USDT") => {
+const getBalanceFromBNB = async (client: any, symbol: string = "USDT") => {
   const balances = await client.futuresAccountBalance();
   const usdtBalance = balances.find((b: any) => b.asset === symbol);
-  return usdtBalance.balance;
+  return usdtBalance?.balance;
+};
+
+const getBalanceFromDb = async (year_month: string) => {
+  return await getBalance({ year_month });
 };
 
 export { getBinanceFuturePositionHistory };
