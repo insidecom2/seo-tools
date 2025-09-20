@@ -17,7 +17,8 @@ const BinanceHistoryComm = () => {
 
   const balance = lists?.balance ?? 0;
   const funding = lists?.funding ?? 0;
-  const percentTP = DecimalFormat(((balance - funding) / funding) * 100);
+  const totalPnl = lists?.totalPnL ?? 0;
+  const percentTP = DecimalFormat((totalPnl / funding) * 100);
   const displayPerTP = balance > funding ? "text-success" : "text-danger";
   return (
     <div>
