@@ -7,12 +7,31 @@ interface IBalance {
 
 const tbl = "tbl_monthly_balance";
 const getBalance = async ({ year_month }: IBalance): Promise<number> => {
-  const sqlString = `SELECT * FROM ${tbl} WHERE \`year_month\`='${year_month}' `;
-  const connection = await DBConnect();
-  const [data] = await connection.execute(sqlString);
-  await connection.end();
-  if (data) return Number(data[0]?.amount);
-  return 0;
+  try {
+    const sqlString = `SELECT * FROM ${tbl} WHERE \`year_month\`='${year_month}' `;
+    const connection = await DBConnect();
+    const [data] = await connection.execute(sqlString);
+    await connection.end();
+    if (data) return Number(data[0]?.amount);
+    return 0;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
-export { getBalance };
+const addBalance = async ({
+  year_month,
+  amount,
+}: IBalance): Promise<boolean> => {
+  try {
+    const sqlString = `INERT INTO ${tbl} (\`year_month\`, \`amount\`) VALUES ('${year_month}', ${amount}) `;
+    const connection = await DBConnect();
+    const [data] = await connection.execute(sqlString);
+    await connection.end();
+    return !!data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+export { addBalance, getBalance };

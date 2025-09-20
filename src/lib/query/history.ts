@@ -33,18 +33,26 @@ const getBinanceFuturePositionHistory = async ({
 
   const histories: any[] = await client.futuresIncome({
     symbol: symbol, // optional; omit to fetch all symbols
-    incomeType: "REALIZED_PNL", // optional; filter by type
+    // incomeType: "REALIZED_PNL", // optional; filter by type
     startTime: firstDayOfMonth,
     endTime: lastDayOfMonth,
     limit: 1000,
   });
 
   const mergedIncome: Record<number, number> = {};
-
+  const winLose: Record<number, number> = {};
   histories.forEach((entry) => {
     // Use timestamp as key (or symbol + time if you have multiple symbols)
     const key = entry.time;
     mergedIncome[key] = (mergedIncome[key] || 0) + parseFloat(entry.income);
+  });
+
+  histories.forEach((entry) => {
+    // Use timestamp as key (or symbol + time if you have multiple symbols)
+    const key = entry.time;
+    if (entry.incomeType == "REALIZED_PNL") {
+      winLose[key] = (winLose[key] || 0) + parseFloat(entry.income);
+    }
   });
 
   const mergedArray = Object.entries(mergedIncome).map(([time, income]) => ({
@@ -53,17 +61,25 @@ const getBinanceFuturePositionHistory = async ({
     symbol: symbol,
   }));
 
+  const mergedWinLose = Object.entries(winLose).map(([time, income]) => ({
+    time: Number(time),
+    totalIncome: income,
+    symbol: symbol,
+  }));
+
+  const totalPnL = mergedArray.reduce((sum, entry) => {
+    const sumAll = sum + entry.totalIncome;
+    return sumAll;
+  }, 0);
+
   const sortedIncome = mergedArray.sort((a, b) => b.time - a.time);
-  const totalPnL = sortedIncome.reduce(
-    (sum, entry) => sum + entry.totalIncome,
-    0
-  );
-  const winRateRow = sortedIncome.reduce(
+
+  const winRateRow = mergedWinLose.reduce(
     (row, entry) => (entry.totalIncome > 0 ? row + 1 : row),
     0
   );
 
-  const loseRateRow = sortedIncome.reduce(
+  const loseRateRow = mergedWinLose.reduce(
     (row, entry) => (entry.totalIncome < 0 ? row + 1 : row),
     0
   );
@@ -75,8 +91,8 @@ const getBinanceFuturePositionHistory = async ({
     funding: await getBalanceFromDb(
       `${year}-${String(month).padStart(2, "0")}`
     ),
-    winRatePercentage: (winRateRow / sortedIncome.length) * 100,
-    loseRatePercentage: (loseRateRow / sortedIncome.length) * 100,
+    winRatePercentage: (winRateRow / mergedWinLose.length) * 100,
+    loseRatePercentage: (loseRateRow / mergedWinLose.length) * 100,
   };
 };
 
@@ -90,4 +106,4 @@ const getBalanceFromDb = async (year_month: string) => {
   return await getBalance({ year_month });
 };
 
-export { getBinanceFuturePositionHistory };
+export { getBalanceFromBNB, getBinanceFuturePositionHistory };
