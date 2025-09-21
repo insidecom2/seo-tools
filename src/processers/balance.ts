@@ -24,13 +24,14 @@ const addBalance = async ({
   amount,
 }: IBalance): Promise<boolean> => {
   try {
-    const sqlString = `INERT INTO ${tbl} (\`year_month\`, \`amount\`) VALUES ('${year_month}', ${amount}) `;
+    const sqlString = `INSERT INTO ${tbl} (\`year_month\`, \`amount\`) VALUES ('${year_month}', ${amount}) `;
     const connection = await DBConnect();
     const [data] = await connection.execute(sqlString);
     await connection.end();
     return !!data;
   } catch (error) {
-    throw new Error(error.message);
+    console.log("error", error.message);
+    return false;
   }
 };
 
