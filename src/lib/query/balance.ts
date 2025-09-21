@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { binanceConnection } from "./connect";
 import { getBalanceFromBNB } from "./history";
 
-export const getBNBFutureBalance = async () => {
+export const addBNBFutureBalance = async () => {
   const client: any = await binanceConnection();
   const symbol = "USDT";
   const balance = getBalanceFromBNB(client, symbol);

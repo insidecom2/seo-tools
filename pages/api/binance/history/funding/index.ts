@@ -1,4 +1,4 @@
-import { getBNBFutureBalance } from "@/src/lib/query/balance";
+import { addBNBFutureBalance } from "@/src/lib/query/balance";
 import { NextApiRequest, NextApiResponse } from "next/types";
 
 export default async function handler(
@@ -16,7 +16,7 @@ export default async function handler(
   }
   switch (req.method) {
     case "POST":
-      await getBNBFutureBalance();
+      await addBNBFutureBalance();
       break;
     default:
       return res.status(405).end(`Method ${req.method} Not Allowed`);
