@@ -6,8 +6,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const xToken = req.headers["x-token-key"].toString();
-  const tokenKey = process.env.TOKEN_KEY;
-  const checkAUth = atob(xToken) === tokenKey;
+  const tokenKey = process.env.TOKEN_KEY ?? "";
+  const decoded = Buffer.from(xToken, "base64").toString("utf8");
+  const checkAUth = decoded === tokenKey;
 
   if (!checkAUth) {
     return res.status(401).json({
@@ -16,8 +17,10 @@ export default async function handler(
   }
   switch (req.method) {
     case "POST":
-      await addBNBFutureBalance();
-      break;
+      const resp = await addBNBFutureBalance();
+      return res.status(200).json({
+        status: resp,
+      });
     default:
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
