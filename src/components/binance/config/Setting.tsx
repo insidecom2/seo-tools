@@ -51,11 +51,11 @@ export const BinanceSetting = () => {
         <Form onSubmit={(e) => handleSubmit(e)}>
           {lists?.map((list) => {
             return (
-              <Row className="pb-3 g-3" key={list.f_key}>
-                <Col xs={3}>
+              <Row className="pb-3 g-2" key={list.f_key}>
+                <Col xs={12} md={3}>
                   <FormLabel>{list.f_key} :</FormLabel>
                 </Col>
-                <Col xs={3}>
+                <Col xs={12} md={3}>
                   <FormControl
                     ref={(el) => {
                       refs.current[list.f_key] = el;
@@ -68,8 +68,8 @@ export const BinanceSetting = () => {
             );
           })}
           <Row className="pb-3 g-3">
-            <Col xs={3}></Col>
-            <Col xs={3}>
+            <Col xs={12} md={3}></Col>
+            <Col xs={12} md={6}>
               <Button type="submit">Update</Button>
             </Col>
           </Row>
