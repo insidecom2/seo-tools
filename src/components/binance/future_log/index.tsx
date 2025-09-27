@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import useFutureLogs from "./hook/useLogs";
-import { LoadingIcon } from "../../common/loading";
-import { Button, Col, Pagination, Row, Table } from "react-bootstrap";
 import { DateTimeConvert } from "@/src/utils/datetime";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { DecimalFormat } from "@/src/utils/format";
 import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { DecimalFormat } from "@/src/utils/format";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import { Button, Col, Pagination, Row, Table } from "react-bootstrap";
+import { LoadingIcon } from "../../common/loading";
+import useFutureLogs from "./hook/useLogs";
 
 export const FutureLogsComm = () => {
   const { getLogs, isLoading, lists, pagination } = useFutureLogs();
@@ -45,7 +45,7 @@ export const FutureLogsComm = () => {
     getLogs(paginationTable);
   }, [paginationTable]);
 
-  if (isLoading) return <LoadingIcon />;
+  if (isLoading || !pagination) return <LoadingIcon />;
 
   return (
     <div className="pt-2">
