@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import Http from "../utils/http";
 
 export default function NavbarTop() {
@@ -43,6 +43,9 @@ export default function NavbarTop() {
               </NavDropdown.Item>
               <NavDropdown.Item href="/dashboard/binance/future_logs">
                 Future Logs
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/dashboard/binance/config">
+                Config
               </NavDropdown.Item>
               {/* <NavDropdown.Item href="#action/3.2">Add Tracker domain&keyword</NavDropdown.Item>
                             <NavDropdown.Divider />
