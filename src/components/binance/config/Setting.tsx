@@ -1,13 +1,8 @@
+import { useModalStore } from "@/src/stores/modal";
 import { useEffect, useRef } from "react";
-import {
-  Button,
-  Col,
-  Form,
-  FormControl,
-  FormLabel,
-  Row,
-} from "react-bootstrap";
+import { Button, Col, Form, FormControl, Row } from "react-bootstrap";
 import { LoadingIcon } from "../../common/loading";
+import ModalCommon from "../../common/modal";
 import { useLists } from "./hooks/useList";
 import { useUpdate } from "./hooks/useUpdate";
 
@@ -15,6 +10,7 @@ export const BinanceSetting = () => {
   const { getList, lists, isLoading } = useLists();
   const { isLoading: isUpdateLoading, updateData } = useUpdate();
   const refs = useRef({});
+  const { setShow } = useModalStore();
 
   const focusByKey = (key) => {
     refs.current[key]?.focus();
@@ -42,20 +38,27 @@ export const BinanceSetting = () => {
     getList();
   }, []);
 
-  if (isLoading || isUpdateLoading) return <LoadingIcon />;
+  if (isLoading || isUpdateLoading) {
+    return <LoadingIcon />;
+  }
 
   return (
     <>
       <div className="pt-2">
-        <h2>Setting</h2>
+        <div className="d-flex align-items-center gap-2 justify-content-between py-2">
+          <h2>Setting</h2>
+          <Button className="btn btn-info btn-sm" onClick={setShow}>
+            + Add Key
+          </Button>
+        </div>
         <Form onSubmit={(e) => handleSubmit(e)}>
           {lists?.map((list) => {
             return (
               <Row className="pb-3 g-2" key={list.f_key}>
-                <Col xs={12} md={3}>
-                  <FormLabel>{list.f_key} :</FormLabel>
+                <Col xs={12} md={4} className="d-flex align-items-center ">
+                  {list.f_key} :
                 </Col>
-                <Col xs={12} md={3}>
+                <Col xs={12} md={8}>
                   <FormControl
                     ref={(el) => {
                       refs.current[list.f_key] = el;
@@ -74,6 +77,7 @@ export const BinanceSetting = () => {
             </Col>
           </Row>
         </Form>
+        <ModalCommon Compo={<>Hi</>} title="Add Setting" />
       </div>
     </>
   );

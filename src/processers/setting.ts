@@ -13,7 +13,7 @@ const getSettings = async () => {
   }
 };
 
-const updateSettings = async (key: string, value: number) => {
+const updateSettings = async (key: string, value: number | string) => {
   try {
     const sqlString = `UPDATE ${tbl} SET f_value=${value} WHERE f_key='${key}'`;
     const connection = await DBConnect();
@@ -25,4 +25,16 @@ const updateSettings = async (key: string, value: number) => {
   }
 };
 
-export { getSettings, updateSettings };
+const createSettings = async (key: string, value: number | string) => {
+  try {
+    const sqlString = `INSERT INTO ${tbl} (\`f_value\`, \`f_key\`) VALUES ('${value}','${key}') `;
+    const connection = await DBConnect();
+    const [data] = await connection.execute(sqlString);
+    await connection.end();
+    return !!data.affectedRows;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+export { createSettings, getSettings, updateSettings };
