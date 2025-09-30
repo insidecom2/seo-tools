@@ -1,5 +1,9 @@
 import AuthAdmin from "@/src/lib/middlewares/AuthAdmin";
-import { getSettings, updateSettings } from "@/src/processers/setting";
+import {
+  createSettings,
+  getSettings,
+  updateSettings,
+} from "@/src/processers/setting";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (req: NextApiRequest, resp: NextApiResponse) => {
@@ -10,6 +14,7 @@ const handler = async (req: NextApiRequest, resp: NextApiResponse) => {
     });
   }
 
+  const { key, value } = req.body;
   switch (req.method) {
     case "GET":
       try {
@@ -18,8 +23,7 @@ const handler = async (req: NextApiRequest, resp: NextApiResponse) => {
       } catch (error) {
         return resp.status(500).end({ error: error.message });
       }
-    case "PATCH":
-      const { key, value } = req.body;
+    case "POST":
       if (!key || key == "") {
         return resp.status(400).send(`Required key`);
       }
@@ -28,7 +32,21 @@ const handler = async (req: NextApiRequest, resp: NextApiResponse) => {
       }
 
       try {
-        const res = await updateSettings(key, Number(value));
+        const res = await createSettings(key, value.toString());
+        return resp.status(201).send({ updated: res });
+      } catch (error) {
+        return resp.status(500).send({ error: error.message });
+      }
+    case "PATCH":
+      if (!key || key == "") {
+        return resp.status(400).send(`Required key`);
+      }
+      if (!value || value === "") {
+        return resp.status(400).send(`Required value`);
+      }
+
+      try {
+        const res = await updateSettings(key, value.toString());
         return resp.status(200).send({ updated: res });
       } catch (error) {
         return resp.status(500).send({ error: error.message });
