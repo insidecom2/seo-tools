@@ -7,6 +7,7 @@ export const addBNBFutureBalance = async () => {
   const client: any = await binanceConnection();
   const symbol = "USDT";
   const balance = await getBalanceFromBNB(client, symbol);
-  const yearMonth = dayjs().format("YYYY-MM");
+  const nowUTC7 = dayjs().tz("Asia/Bangkok");
+  const yearMonth = nowUTC7.format("YYYY-MM");
   return addBalance({ year_month: yearMonth, amount: Number(balance) || 0 });
 };
