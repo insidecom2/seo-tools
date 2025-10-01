@@ -1,8 +1,9 @@
 import { useModalStore } from "@/src/stores/modal";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Col, Form, FormControl, Row } from "react-bootstrap";
 import { LoadingIcon } from "../../common/loading";
 import ModalCommon from "../../common/modal";
+import { CreateSetting } from "./Create";
 import { useLists } from "./hooks/useList";
 import { useUpdate } from "./hooks/useUpdate";
 
@@ -10,11 +11,9 @@ export const BinanceSetting = () => {
   const { getList, lists, isLoading } = useLists();
   const { isLoading: isUpdateLoading, updateData } = useUpdate();
   const refs = useRef({});
-  const { setShow } = useModalStore();
+  const { setShow, setClose } = useModalStore();
+  const [createdResult, setCreatedResult] = useState(false);
 
-  const focusByKey = (key) => {
-    refs.current[key]?.focus();
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (lists) {
@@ -38,7 +37,15 @@ export const BinanceSetting = () => {
     getList();
   }, []);
 
-  if (isLoading || isUpdateLoading) {
+  useEffect(() => {
+    console.log("createdResult", createdResult);
+    if (createdResult) {
+      setClose();
+      getList();
+    }
+  }, [createdResult]);
+
+  if (isLoading || isUpdateLoading || !lists) {
     return <LoadingIcon />;
   }
 
@@ -71,13 +78,16 @@ export const BinanceSetting = () => {
             );
           })}
           <Row className="pb-3 g-3">
-            <Col xs={12} md={3}></Col>
-            <Col xs={12} md={6}>
+            <Col xs={12} md={4}></Col>
+            <Col xs={12} md={8}>
               <Button type="submit">Update</Button>
             </Col>
           </Row>
         </Form>
-        <ModalCommon Compo={<>Hi</>} title="Add Setting" />
+        <ModalCommon
+          Compo={<CreateSetting setResult={setCreatedResult} />}
+          title="Add Setting"
+        />
       </div>
     </>
   );
