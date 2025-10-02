@@ -37,4 +37,16 @@ const createSettings = async (key: string, value: number | string) => {
   }
 };
 
-export { createSettings, getSettings, updateSettings };
+const deleteSettings = async (key: string) => {
+  try {
+    const sqlString = `DELETE FROM ${tbl} WHERE \`f_key\` = '${key}' `;
+    const connection = await DBConnect();
+    const [data] = await connection.execute(sqlString);
+    await connection.end();
+    return !!data.affectedRows;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+export { createSettings, deleteSettings, getSettings, updateSettings };

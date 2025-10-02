@@ -15,7 +15,7 @@ const BinanceHistoryComm = () => {
       getPositionHistory({ symbol: symbol, monthYear: monthYear });
   }, [symbol, monthYear]);
 
-  const balance = lists?.balance ?? 0;
+  const balance = lists?.funding + lists?.totalPnL;
   const funding = lists?.funding ?? 0;
   const totalPnl = lists?.totalPnL ?? 0;
   const percentTP = DecimalFormat((totalPnl / funding) * 100);

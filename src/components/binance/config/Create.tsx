@@ -29,10 +29,9 @@ export const CreateSetting = ({
     }
   };
 
-  if (isLoading) return <LoadingIcon />;
-
   return (
     <>
+      {isLoading && <LoadingIcon />}
       <div className="d-flex flex-column gap-3">
         <FormControl
           ref={(el) => {
