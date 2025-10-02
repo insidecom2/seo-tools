@@ -1,15 +1,19 @@
 import { useModalStore } from "@/src/stores/modal";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
-import { Button, Col, Form, FormControl, Row } from "react-bootstrap";
+import { Button, Col, Dropdown, Form, FormControl, Row } from "react-bootstrap";
 import { LoadingIcon } from "../../common/loading";
 import ModalCommon from "../../common/modal";
 import { CreateSetting } from "./Create";
+import { useDelete } from "./hooks/useDelete";
 import { useLists } from "./hooks/useList";
 import { useUpdate } from "./hooks/useUpdate";
 
 export const BinanceSetting = () => {
   const { getList, lists, isLoading } = useLists();
   const { isLoading: isUpdateLoading, updateData } = useUpdate();
+  const { isLoading: isDeleteLoading, deleteData } = useDelete();
   const refs = useRef({});
   const { setShow, setClose } = useModalStore();
   const [createdResult, setCreatedResult] = useState(false);
@@ -38,14 +42,18 @@ export const BinanceSetting = () => {
   }, []);
 
   useEffect(() => {
-    console.log("createdResult", createdResult);
     if (createdResult) {
       setClose();
       getList();
     }
   }, [createdResult]);
 
-  if (isLoading || isUpdateLoading || !lists) {
+  const deleteItem = async (key: string) => {
+    await deleteData({ key });
+    await getList();
+  };
+
+  if (isLoading || isUpdateLoading || !lists || isDeleteLoading) {
     return <LoadingIcon />;
   }
 
@@ -65,7 +73,7 @@ export const BinanceSetting = () => {
                 <Col xs={12} md={4} className="d-flex align-items-center ">
                   {list.f_key} :
                 </Col>
-                <Col xs={12} md={8}>
+                <Col xs={9} md={6}>
                   <FormControl
                     ref={(el) => {
                       refs.current[list.f_key] = el;
@@ -73,6 +81,24 @@ export const BinanceSetting = () => {
                     id={`value_${list.f_key}`}
                     defaultValue={list.f_value}
                   />
+                </Col>
+                <Col xs="3" md="2">
+                  <Dropdown className="w-100">
+                    <Dropdown.Toggle
+                      variant="danger"
+                      id="dropdown-basic"
+                      className="w-100"
+                    >
+                      <FontAwesomeIcon icon={faTrash} className="px-2" />
+                      Delete
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={() => deleteItem(list?.f_key)}>
+                        Confirm delete
+                      </Dropdown.Item>
+                      <Dropdown.Item href="#">Cancel</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </Col>
               </Row>
             );
