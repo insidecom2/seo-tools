@@ -90,7 +90,6 @@ export const BinanceSetting = () => {
                       className="w-100"
                     >
                       <FontAwesomeIcon icon={faTrash} className="px-2" />
-                      Delete
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item onClick={() => deleteItem(list?.f_key)}>
