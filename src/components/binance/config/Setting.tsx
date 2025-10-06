@@ -59,7 +59,7 @@ export const BinanceSetting = () => {
 
   return (
     <>
-      <div className="pt-2">
+      <div className="pt-sm-1 pt-md-2">
         <div className="d-flex align-items-center gap-2 justify-content-between py-2">
           <h2>Setting</h2>
           <Button className="btn btn-info btn-sm" onClick={setShow}>
@@ -83,7 +83,7 @@ export const BinanceSetting = () => {
                   />
                 </Col>
                 <Col xs="3" md="2">
-                  <Dropdown className="w-100">
+                  <Dropdown className="w-100" align="end">
                     <Dropdown.Toggle
                       variant="danger"
                       id="dropdown-basic"
