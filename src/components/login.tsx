@@ -1,17 +1,17 @@
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import {
+  Button,
   Card,
   Col,
   Container,
   Form,
   Row,
-  Button,
   Spinner,
 } from "react-bootstrap";
-import Http from "../utils/http";
 import { HTTP_STATUS_CODE } from "../utils/constants";
-import Cookies from "js-cookie";
-import { useRouter } from "next/router";
+import Http from "../utils/http";
 
 export interface dataFormData {
   email: string;
@@ -38,7 +38,7 @@ export default function Login() {
         if (response.status === HTTP_STATUS_CODE.OK) {
           if (response.data.status) {
             Cookies.set("token", response.data.token);
-            router.push("/dashboard/tracking");
+            router.push("/dashboard/binance/history");
           } else {
             setAlert(response.data.message);
           }

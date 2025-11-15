@@ -30,4 +30,4 @@ const getCountFutureLogs = async ({ symbol }: GetFutureLogs) => {
   return 0;
 };
 
-export { getFutureLogs, getCountFutureLogs };
+export { getCountFutureLogs, getFutureLogs };
