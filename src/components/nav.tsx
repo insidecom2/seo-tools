@@ -25,18 +25,18 @@ export default function NavbarTop() {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">Seo Tool</Navbar.Brand>
+        <Navbar.Brand href="#home">Trader System</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavDropdown title="Rank Tracker" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/dashboard/tracking">
+            {/* <NavDropdown title="Rank Tracker" id="basic-nav-dropdown"> */}
+            {/* <NavDropdown.Item href="/dashboard/tracking">
                 Rank Tracking (Manual)
-              </NavDropdown.Item>
-              {/* <NavDropdown.Item href="#action/3.2">Add Tracker domain&keyword</NavDropdown.Item>
+              </NavDropdown.Item> */}
+            {/* <NavDropdown.Item href="#action/3.2">Add Tracker domain&keyword</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.3">Reports</NavDropdown.Item> */}
-            </NavDropdown>
+            {/* </NavDropdown> */}
             <NavDropdown title="Binance" id="basic-nav-dropdown">
               <NavDropdown.Item href="/dashboard/binance/history">
                 History
