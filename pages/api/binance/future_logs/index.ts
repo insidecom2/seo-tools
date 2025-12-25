@@ -4,7 +4,6 @@ import {
   getCountFutureLogs,
   getFutureLogs,
 } from "@/src/processers/future_logs";
-import { number } from "joi";
 import { NextApiRequest, NextApiResponse } from "next/types";
 
 export default async function handler(
@@ -29,6 +28,7 @@ export default async function handler(
             : parseInt(req.query.page as string);
         const symbol = req.query.symbol as string;
         const start = (page - 1) * limit;
+        const type = req.query.type as string;
 
         if (!symbol || typeof symbol !== "string") {
           return res.status(400).json({ error: "Symbol is required" });
@@ -38,9 +38,13 @@ export default async function handler(
           symbol: symbol,
           start: start,
           limit: limit,
+          type: type || "",
         });
 
-        const row = await getCountFutureLogs({ symbol: symbol });
+        const row = await getCountFutureLogs({
+          symbol: symbol,
+          type: type || "",
+        });
         const pagination: Pagination = {
           all: row,
           limit: limit,
