@@ -44,6 +44,9 @@ export default function NavbarTop() {
               <NavDropdown.Item href="/dashboard/binance/future_logs">
                 Future Logs
               </NavDropdown.Item>
+              <NavDropdown.Item href="/dashboard/binance/future_xgb_logs">
+                Future Xgb Logs
+              </NavDropdown.Item>
               <NavDropdown.Item href="/dashboard/binance/config">
                 Config
               </NavDropdown.Item>
