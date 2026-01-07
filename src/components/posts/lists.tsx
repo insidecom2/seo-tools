@@ -1,10 +1,14 @@
 "use client";
 import { Col, Container, Row } from "react-bootstrap";
+import { LoadingIcon } from "../common/loading";
 import useGetLists from "./hooks/useGetLists";
 
 export const PostsListsComm = () => {
   const { data, isLoading } = useGetLists({ page: 1, limit: 10 });
   //   console.log("data:", data, isLoading);
+
+  if (isLoading) return <LoadingIcon />;
+
   return (
     <>
       <Container className="py-1 py-md-3  h-100">
