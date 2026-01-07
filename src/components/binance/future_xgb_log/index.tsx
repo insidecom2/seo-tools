@@ -87,14 +87,19 @@ export const FutureXgbLogsComm = () => {
           {lists &&
             lists.map((row, index) => {
               const body = JSON.parse(row.body_json);
-
+              const labelExpected = ["BUY", "SELL"].includes(body.label);
               const bgOrder =
-                body.signal == "BUY" || body.signal == "SELL"
+                parseFloat(body.confidence) >= 0.8 &&
+                Math.abs(parseFloat(body.expected_future_return_pct)) >= 0.45 &&
+                labelExpected
                   ? "bg-success text-white"
                   : "";
               return (
                 <tr key={row.timestamp} className={bgOrder}>
-                  <td>{index + 1}</td>
+                  <td>
+                    {(paginationTable.page - 1) * paginationTable.limit +
+                      (index + 1)}
+                  </td>
                   <td>{row.symbol}</td>
                   <td>
                     {DateTimeConvert(

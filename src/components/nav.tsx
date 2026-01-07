@@ -25,7 +25,7 @@ export default function NavbarTop() {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">Trader System</Navbar.Brand>
+        <Navbar.Brand href="#home">Dashboard</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -53,6 +53,9 @@ export default function NavbarTop() {
               {/* <NavDropdown.Item href="#action/3.2">Add Tracker domain&keyword</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.3">Reports</NavDropdown.Item> */}
+            </NavDropdown>
+            <NavDropdown title="Posts" id="basic-nav-dropdown-2">
+              <NavDropdown.Item href="/dashboard/posts">Lists</NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Navbar.Collapse className="justify-content-end">
