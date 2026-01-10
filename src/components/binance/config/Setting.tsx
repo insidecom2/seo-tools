@@ -1,8 +1,7 @@
 import { useModalStore } from "@/src/stores/modal";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import { Button, Col, Dropdown, Form, FormControl, Row } from "react-bootstrap";
+import { FaTrash } from "react-icons/fa6";
 import { LoadingIcon } from "../../common/loading";
 import ModalCommon from "../../common/modal";
 import { CreateSetting } from "./Create";
@@ -89,7 +88,7 @@ export const BinanceSetting = () => {
                       id="dropdown-basic"
                       className="w-100"
                     >
-                      <FontAwesomeIcon icon={faTrash} className="px-2" />
+                      <FaTrash />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item onClick={() => deleteItem(list?.f_key)}>

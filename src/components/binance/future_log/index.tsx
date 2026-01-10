@@ -1,12 +1,8 @@
 import { DateTimeConvert } from "@/src/utils/datetime";
 import { DecimalFormat } from "@/src/utils/format";
-import {
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Button, Col, Row, Table } from "react-bootstrap";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { LoadingIcon } from "../../common/loading";
 import useFutureLogs from "./hook/useLogs";
 
@@ -52,7 +48,7 @@ export const FutureLogsComm = () => {
       <Row className="pb-3">
         <Col xs={1}>
           <Button onClick={() => changePageStep("left")}>
-            <FontAwesomeIcon icon={faChevronLeft} />
+            <FaChevronLeft />
           </Button>
         </Col>
         <Col xs={10}>
@@ -65,7 +61,7 @@ export const FutureLogsComm = () => {
         </Col>
         <Col xs={1} className="text-end">
           <Button onClick={() => changePageStep("right")}>
-            <FontAwesomeIcon icon={faChevronRight} />
+            <FaChevronRight />
           </Button>
         </Col>
       </Row>
@@ -128,7 +124,7 @@ export const FutureLogsComm = () => {
       <Row className="pb-3">
         <Col xs={1}>
           <Button onClick={() => changePageStep("left")}>
-            <FontAwesomeIcon icon={faChevronLeft} />
+            <FaChevronLeft />
           </Button>
         </Col>
         <Col xs={10}>
@@ -141,7 +137,7 @@ export const FutureLogsComm = () => {
         </Col>
         <Col xs={1} className="text-end">
           <Button onClick={() => changePageStep("right")}>
-            <FontAwesomeIcon icon={faChevronRight} />
+            <FaChevronRight />
           </Button>
         </Col>
       </Row>

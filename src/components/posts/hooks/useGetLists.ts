@@ -1,4 +1,4 @@
-import { Pagination } from "@/src/interface/pagination";
+import { PaginationPosts } from "@/src/interface/pagination";
 import Http from "@/src/utils/http";
 import { QueryFunction, useQuery } from "@tanstack/react-query";
 
@@ -25,7 +25,7 @@ export interface SocialPost {
 }
 interface PostsResponse {
   posts: SocialPost[];
-  pagination: Pagination;
+  pagination: PaginationPosts;
 }
 
 const useGetLists = ({

@@ -1,4 +1,4 @@
-import { Pagination } from "@/src/interface/pagination";
+import { PaginationPosts } from "@/src/interface/pagination";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { Table } from "react-bootstrap";
@@ -14,7 +14,7 @@ import { SocialPost } from "../hooks/useGetLists";
 
 interface PostsListProps {
   posts?: SocialPost[];
-  pagination?: Pagination;
+  pagination?: PaginationPosts;
 }
 
 export const PostListTable = ({ posts, pagination }: PostsListProps) => {
