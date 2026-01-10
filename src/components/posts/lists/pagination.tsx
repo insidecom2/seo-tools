@@ -1,9 +1,9 @@
-import { Pagination } from "@/src/interface/pagination";
+import { PaginationPosts } from "@/src/interface/pagination";
 import { usePostsFilterState } from "@/src/stores/post_filter";
 import { useEffect } from "react";
 
 interface PostsPaginationProps {
-  pagination?: Pagination;
+  pagination?: PaginationPosts;
 }
 export const PostsPagination = ({ pagination }: PostsPaginationProps) => {
   const { limit, page, totalAll, totalPage } = pagination;

@@ -19,6 +19,15 @@ a {
   cursor: pointer;
 }
 
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 /* custom css*/
 
 .icon {

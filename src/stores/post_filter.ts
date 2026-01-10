@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import { Pagination } from "../interface/pagination";
+import { PaginationPosts } from "../interface/pagination";
 
 interface PostsFilterState {
-  pagination: Pagination;
+  pagination: PaginationPosts;
   setPage: (value: { page: number }) => void;
-  init: (value: Pagination) => void;
+  init: (value: PaginationPosts) => void;
 }
 
 export const usePostsFilterState = create<PostsFilterState>((set) => ({
