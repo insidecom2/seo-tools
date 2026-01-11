@@ -1,5 +1,6 @@
 import { PaginationPosts } from "@/src/interface/pagination";
 import { usePostsFilterState } from "@/src/stores/post_filter";
+import { isDesktopDevice } from "@/src/utils/device";
 import { useEffect } from "react";
 
 interface PostsPaginationProps {
@@ -8,7 +9,7 @@ interface PostsPaginationProps {
 export const PostsPagination = ({ pagination }: PostsPaginationProps) => {
   const { limit, page, totalAll, totalPage } = pagination;
   const { init, setPage } = usePostsFilterState();
-
+  const isGetDesktopDevice = isDesktopDevice();
   useEffect(() => {
     if (pagination) {
       init(pagination);
@@ -26,20 +27,22 @@ export const PostsPagination = ({ pagination }: PostsPaginationProps) => {
 
   return (
     <nav aria-label="Posts pagination">
-      <ul className="pagination justify-content-center">
+      <ul className="pagination justify-content-end">
         <li className={`page-item ${page === 1 ? "disabled" : ""}`}>
           <button className="page-link" onClick={() => handleChange(page - 1)}>
             Previous
           </button>
         </li>
 
-        {pages.map((p) => (
-          <li key={p} className={`page-item ${p === page ? "active" : ""}`}>
-            <button className="page-link" onClick={() => handleChange(p)}>
-              {p}
-            </button>
-          </li>
-        ))}
+        {isGetDesktopDevice &&
+          totalPage > 10 &&
+          pages.map((p) => (
+            <li key={p} className={`page-item ${p === page ? "active" : ""}`}>
+              <button className="page-link" onClick={() => handleChange(p)}>
+                {p}
+              </button>
+            </li>
+          ))}
 
         <li className={`page-item ${page === totalAll ? "disabled" : ""}`}>
           <button className="page-link" onClick={() => handleChange(page + 1)}>

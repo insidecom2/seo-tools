@@ -12,7 +12,7 @@ export default function ModalCommon(props: IModal) {
 
   return (
     <>
-      <Modal show={isShow} onHide={setClose} centered>
+      <Modal show={isShow} onHide={setClose} centered size="lg">
         <Modal.Header closeButton>
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
