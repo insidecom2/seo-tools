@@ -9,6 +9,13 @@ const Http = axios.create({
   },
 });
 
+export enum Methods {
+  GET = "GET",
+  POST = "POST",
+  PUT = "PUT",
+  DELETE = "DELETE",
+}
+
 Http.interceptors.request.use(
   function (config) {
     const token = Cookies.get("token");

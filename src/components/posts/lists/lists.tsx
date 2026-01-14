@@ -6,6 +6,7 @@ import { LoadingIcon } from "../../common/loading";
 import useGetLists from "../hooks/useGetLists";
 import { PostsPagination } from "./pagination";
 import { PostListTable } from "./table";
+import {AlertComm} from "@/src/components/common/alert";
 
 export const PostsListsComm = () => {
   const pagination = usePostsFilterState((s) => s.pagination);
@@ -32,6 +33,7 @@ export const PostsListsComm = () => {
           </Col>
           <Col md={12} className="d-flex justify-content-end">
             <PostsPagination pagination={data?.pagination} />
+            <AlertComm />
           </Col>
         </Row>
       </Container>
