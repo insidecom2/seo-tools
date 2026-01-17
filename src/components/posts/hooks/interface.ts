@@ -16,6 +16,6 @@ export interface SocialPost {
   tikTokStatus: "pending" | "completed" | "failed" | string;
   youtubeStatus: "pending" | "completed" | "failed" | string;
   webStatus: "pending" | "completed" | "failed" | string;
-  image_link_raw: string;
-  video_link_raw: string;
+  imageLinkRaw: string;
+  videoLinkRaw: string;
 }
