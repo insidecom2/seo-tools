@@ -47,12 +47,15 @@ export const FutureLogsComm = () => {
     <div className="pt-2">
       <Row className="pb-3">
         <Col xs={1}>
-          <Button onClick={() => changePageStep("left")}>
+          <Button
+            onClick={() => changePageStep("left")}
+            className="btnPagination"
+          >
             <FaChevronLeft />
           </Button>
         </Col>
         <Col xs={10}>
-          <div className="px-2 d-flex gap-2 ">
+          <div className="px-2 d-flex gap-2">
             <h2>
               Future Logs ({paginationTable.page}/{pagination?.page_all})
             </h2>
@@ -60,75 +63,87 @@ export const FutureLogsComm = () => {
           </div>
         </Col>
         <Col xs={1} className="text-end">
-          <Button onClick={() => changePageStep("right")}>
+          <Button
+            onClick={() => changePageStep("right")}
+            className="btnPagination"
+          >
             <FaChevronRight />
           </Button>
         </Col>
       </Row>
-      <Table bordered hover responsive style={{ fontSize: "14px" }}>
-        <thead>
-          <tr style={{ fontSize: "14px" }}>
-            <th>#</th>
-            <th>Symbol</th>
-            <th>DateTime</th>
-            <th>Interval</th>
-            <th>RSI</th>
-            <th>ADX</th>
-            <th>GAP</th>
-            <th>EMA_S</th>
-            <th>EMA_L</th>
-            <th>LIMIT ORDER</th>
-            <th>CURRENT PRICE</th>
-            <th>VOLUME LAST 20</th>
-            <th>VOLUME LASTED</th>
-            <th>ATR</th>
-            <th>SIGNAL</th>
-          </tr>
-        </thead>
-        <tbody>
-          {lists &&
-            lists.map((row, index) => {
-              const body = JSON.parse(row.body_json);
-              console.log(body);
-              const bgOrder =
-                body.signal == "BUY" || body.signal == "SELL"
-                  ? "bg-success text-white"
-                  : "";
-              return (
-                <tr key={row.time} className={bgOrder}>
-                  <td>{index + 1}</td>
-                  <td>{row.symbol}</td>
-                  <td>
-                    {DateTimeConvert(
-                      row.timestamp as string,
-                      "DD/MM/YYYY HH:mm:ss"
-                    )}
-                  </td>
-                  <td>{body.interval}</td>
-                  <td>{body.rsi.toFixed(2)}</td>
-                  <td>{body.adx.toFixed(2)}</td>
-                  <td>{body.gap.toFixed(6)}</td>
-                  <td>{body.ema_s_last.toFixed(6)}</td>
-                  <td>{body.ema_l_last.toFixed(6)}</td>
-                  <td>{body.trend_order_limit}</td>
-                  <td>{body.current_price.toFixed(6)}</td>
-                  <td>{body?.volume_last_20?.toFixed(4)}</td>
-                  <td>{body?.volume_lasted?.toFixed(4)}</td>
-                  <td>{body?.atr_oder ? "Yes" : "No"}</td>
-                  <td>{body.signal}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+      <div className="tableContainer">
+        <Table bordered hover responsive className="customTable">
+          <thead className="tableHead">
+            <tr>
+              <th style={{ width: "50px" }}>#</th>
+              <th>Symbol</th>
+              <th>DateTime</th>
+              <th>Interval</th>
+              <th>RSI</th>
+              <th>ADX</th>
+              <th>GAP</th>
+              <th>EMA_S</th>
+              <th>EMA_L</th>
+              <th>LIMIT ORDER</th>
+              <th>CURRENT PRICE</th>
+              <th>VOLUME LAST 20</th>
+              <th>VOLUME LASTED</th>
+              <th>ATR</th>
+              <th>SIGNAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            {lists &&
+              lists.map((row, index) => {
+                const body = JSON.parse(row.body_json);
+                const isSignal =
+                  body.signal === "BUY" || body.signal === "SELL";
+                return (
+                  <tr
+                    key={row.time}
+                    className={isSignal ? "tableRow signalRow" : "tableRow"}
+                  >
+                    <td className="indexCell">{index + 1}</td>
+                    <td className="symbolCell">{row.symbol}</td>
+                    <td className="dateCell">
+                      {DateTimeConvert(
+                        row.timestamp as string,
+                        "DD/MM/YYYY HH:mm:ss",
+                      )}
+                    </td>
+                    <td>{body.interval}</td>
+                    <td>{body.rsi.toFixed(2)}</td>
+                    <td>{body.adx.toFixed(2)}</td>
+                    <td>{body.gap.toFixed(6)}</td>
+                    <td>{body.ema_s_last.toFixed(6)}</td>
+                    <td>{body.ema_l_last.toFixed(6)}</td>
+                    <td>{body.trend_order_limit}</td>
+                    <td>{body.current_price.toFixed(6)}</td>
+                    <td>{body?.volume_last_20?.toFixed(4)}</td>
+                    <td>{body?.volume_lasted?.toFixed(4)}</td>
+                    <td>{body?.atr_oder ? "Yes" : "No"}</td>
+                    <td className="signalCell">
+                      <span className={isSignal ? "signalBadge" : ""}>
+                        {body.signal}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </Table>
+      </div>
       <Row className="pb-3">
         <Col xs={1}>
-          <Button onClick={() => changePageStep("left")}>
+          <Button
+            onClick={() => changePageStep("left")}
+            className="btnPagination"
+          >
             <FaChevronLeft />
           </Button>
         </Col>
         <Col xs={10}>
-          <div className="px-2 d-flex gap-2 ">
+          <div className="px-2 d-flex gap-2">
             <h2>
               Future Logs ({paginationTable.page}/{pagination?.page_all})
             </h2>
@@ -136,7 +151,10 @@ export const FutureLogsComm = () => {
           </div>
         </Col>
         <Col xs={1} className="text-end">
-          <Button onClick={() => changePageStep("right")}>
+          <Button
+            onClick={() => changePageStep("right")}
+            className="btnPagination"
+          >
             <FaChevronRight />
           </Button>
         </Col>

@@ -49,12 +49,15 @@ export const FutureXgbLogsComm = () => {
     <div className="pt-2">
       <Row className="pb-3">
         <Col xs={1}>
-          <Button onClick={() => changePageStep("left")}>
+          <Button
+            onClick={() => changePageStep("left")}
+            className="btnPagination"
+          >
             <FaChevronLeft />
           </Button>
         </Col>
         <Col xs={10}>
-          <div className="px-2 d-flex gap-2 ">
+          <div className="px-2 d-flex gap-2">
             <h2>
               Future Logs ({paginationTable.page}/{pagination?.page_all})
             </h2>
@@ -62,66 +65,111 @@ export const FutureXgbLogsComm = () => {
           </div>
         </Col>
         <Col xs={1} className="text-end">
-          <Button onClick={() => changePageStep("right")}>
+          <Button
+            onClick={() => changePageStep("right")}
+            className="btnPagination"
+          >
             <FaChevronRight />
           </Button>
         </Col>
       </Row>
-      <Table bordered hover responsive style={{ fontSize: "14px" }}>
-        <thead>
-          <tr style={{ fontSize: "14px" }}>
-            <th>#</th>
-            <th>Symbol</th>
-            <th>DateTime</th>
-            <th>Label</th>
-            <th>Confidence</th>
-            <th>Price</th>
-            <th>Expected Pct</th>
-            <th>Trend</th>
-          </tr>
-        </thead>
-        <tbody>
-          {lists &&
-            lists.map((row, index) => {
-              const body = JSON.parse(row.body_json);
-              const labelExpected = ["BUY", "SELL"].includes(body.label);
-              const bgOrder =
-                parseFloat(body.confidence) >= 0.8 &&
-                Math.abs(parseFloat(body.expected_future_return_pct)) >= 0.45 &&
-                labelExpected
-                  ? "bg-success text-white"
-                  : "";
-              return (
-                <tr key={row.timestamp} className={bgOrder}>
-                  <td>
-                    {(paginationTable.page - 1) * paginationTable.limit +
-                      (index + 1)}
-                  </td>
-                  <td>{row.symbol}</td>
-                  <td>
-                    {DateTimeConvert(
-                      row.timestamp as string,
-                      "DD/MM/YYYY HH:mm:ss"
-                    )}
-                  </td>
-                  <td>{body.label}</td>
-                  <td>{body.confidence}</td>
-                  <td>{body.price}</td>
-                  <td>{body.expected_future_return_pct}</td>
-                  <td>{body.trend}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+      <div className="tableContainer">
+        <Table bordered hover responsive className="customTable">
+          <thead className="tableHead">
+            <tr>
+              <th style={{ width: "50px" }}>#</th>
+              <th>Symbol</th>
+              <th>DateTime</th>
+              <th>Label</th>
+              <th>Confidence</th>
+              <th>Price</th>
+              <th>Expected Pct</th>
+              <th>Trend</th>
+            </tr>
+          </thead>
+          <tbody>
+            {lists &&
+              lists.map((row, index) => {
+                const body = JSON.parse(row.body_json);
+                const labelExpected = ["BUY", "SELL"].includes(body.label);
+                const isHighConfidence =
+                  parseFloat(body.confidence) >= 0.8 &&
+                  Math.abs(parseFloat(body.expected_future_return_pct)) >=
+                    0.45 &&
+                  labelExpected;
+                return (
+                  <tr
+                    key={row.timestamp}
+                    className={
+                      isHighConfidence ? "tableRow xgbSignalRow" : "tableRow"
+                    }
+                  >
+                    <td className="indexCell">
+                      {(paginationTable.page - 1) * paginationTable.limit +
+                        (index + 1)}
+                    </td>
+                    <td className="symbolCell">
+                      <a
+                        href={`https://www.binance.com/en/futures/${row.symbol}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {row.symbol}
+                      </a>
+                    </td>
+                    <td className="dateCell">
+                      {DateTimeConvert(
+                        row.timestamp as string,
+                        "DD/MM/YYYY HH:mm:ss",
+                      )}
+                    </td>
+                    <td className="labelCell">
+                      <span
+                        className={`labelBadge ${body.label.toLowerCase()}`}
+                      >
+                        {body.label}
+                      </span>
+                    </td>
+                    <td className="confidenceCell">
+                      <span
+                        className={`confidenceBadge ${
+                          parseFloat(body.confidence) >= 0.8 ? "high" : "low"
+                        }`}
+                      >
+                        {(parseFloat(body.confidence) * 100).toFixed(1)}%
+                      </span>
+                    </td>
+                    <td>{body.price}</td>
+                    <td className="returnCell">
+                      <span
+                        className={`returnValue ${
+                          parseFloat(body.expected_future_return_pct) >= 0
+                            ? "positive"
+                            : "negative"
+                        }`}
+                      >
+                        {parseFloat(body.expected_future_return_pct).toFixed(2)}
+                        %
+                      </span>
+                    </td>
+                    <td className="trendCell">{body.trend}</td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </Table>
+      </div>
       <Row className="pb-3">
         <Col xs={1}>
-          <Button onClick={() => changePageStep("left")}>
+          <Button
+            onClick={() => changePageStep("left")}
+            className="btnPagination"
+          >
             <FaChevronLeft />
           </Button>
         </Col>
         <Col xs={10}>
-          <div className="px-2 d-flex gap-2 ">
+          <div className="px-2 d-flex gap-2">
             <h2>
               Future Logs ({paginationTable.page}/{pagination?.page_all})
             </h2>
@@ -129,7 +177,10 @@ export const FutureXgbLogsComm = () => {
           </div>
         </Col>
         <Col xs={1} className="text-end">
-          <Button onClick={() => changePageStep("right")}>
+          <Button
+            onClick={() => changePageStep("right")}
+            className="btnPagination"
+          >
             <FaChevronRight />
           </Button>
         </Col>

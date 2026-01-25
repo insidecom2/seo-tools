@@ -18,4 +18,5 @@ export interface SocialPost {
   webStatus: "pending" | "completed" | "failed" | string;
   imageLinkRaw: string;
   videoLinkRaw: string;
+  title: string;
 }

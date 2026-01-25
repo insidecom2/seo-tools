@@ -1,7 +1,7 @@
 import { useModalStore } from "@/src/stores/modal";
 import { useEffect, useRef, useState } from "react";
-import { Button, Col, Dropdown, Form, FormControl, Row } from "react-bootstrap";
-import { FaTrash } from "react-icons/fa6";
+import { Button, Form, FormControl } from "react-bootstrap";
+import { FaFloppyDisk, FaGear, FaPlus, FaTrash } from "react-icons/fa6";
 import { LoadingIcon } from "../../common/loading";
 import ModalCommon from "../../common/modal";
 import { CreateSetting } from "./Create";
@@ -58,56 +58,50 @@ export const BinanceSetting = () => {
 
   return (
     <>
-      <div className="pt-sm-1 pt-md-2">
-        <div className="d-flex align-items-center gap-2 justify-content-between py-2">
-          <h2>Setting</h2>
-          <Button className="btn btn-info btn-sm" onClick={setShow}>
-            + Add Key
+      <div className="settingMinimal pt-3">
+        <div className="settingMinimalHeader">
+          <h2 className="settingMinimalTitle">
+            <FaGear /> Settings
+          </h2>
+          <Button className="settingMinimalBtn" onClick={setShow}>
+            <FaPlus /> Add
           </Button>
         </div>
-        <Form onSubmit={(e) => handleSubmit(e)}>
-          {lists?.map((list) => {
-            return (
-              <Row className="pb-3 g-2" key={list.f_key}>
-                <Col xs={12} md={4} className="d-flex align-items-center ">
-                  {list.f_key} :
-                </Col>
-                <Col xs={9} md={6}>
+
+        <Form onSubmit={(e) => handleSubmit(e)} className="settingMinimalForm">
+          <div className="settingMinimalList">
+            {lists?.map((list) => {
+              return (
+                <div key={list.f_key} className="settingMinimalRow">
+                  <div className="settingMinimalKey">{list.f_key}</div>
                   <FormControl
                     ref={(el) => {
                       refs.current[list.f_key] = el;
                     }}
                     id={`value_${list.f_key}`}
                     defaultValue={list.f_value}
+                    className="settingMinimalInput"
                   />
-                </Col>
-                <Col xs="3" md="2">
-                  <Dropdown className="w-100" align="end">
-                    <Dropdown.Toggle
-                      variant="danger"
-                      id="dropdown-basic"
-                      className="w-100"
-                    >
-                      <FaTrash />
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => deleteItem(list?.f_key)}>
-                        Confirm delete
-                      </Dropdown.Item>
-                      <Dropdown.Item href="#">Cancel</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </Col>
-              </Row>
-            );
-          })}
-          <Row className="pb-3 g-3">
-            <Col xs={12} md={4}></Col>
-            <Col xs={12} md={8}>
-              <Button type="submit">Update</Button>
-            </Col>
-          </Row>
+                  <button
+                    type="button"
+                    className="settingMinimalDelete"
+                    onClick={() => deleteItem(list?.f_key)}
+                    title="Delete"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="settingMinimalFooter">
+            <Button type="submit" className="settingMinimalSubmit">
+              <FaFloppyDisk /> Save
+            </Button>
+          </div>
         </Form>
+
         <ModalCommon
           Compo={<CreateSetting setResult={setCreatedResult} />}
           title="Add Setting"
