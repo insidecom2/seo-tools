@@ -2,14 +2,17 @@ import { PaginationPosts } from "@/src/interface/pagination";
 import { usePostsFilterState } from "@/src/stores/post_filter";
 import { isDesktopDevice } from "@/src/utils/device";
 import { useEffect } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 interface PostsPaginationProps {
   pagination?: PaginationPosts;
 }
+
 export const PostsPagination = ({ pagination }: PostsPaginationProps) => {
   const { limit, page, totalAll, totalPage } = pagination;
   const { init, setPage } = usePostsFilterState();
   const isGetDesktopDevice = isDesktopDevice();
+
   useEffect(() => {
     if (pagination) {
       init(pagination);
@@ -26,34 +29,55 @@ export const PostsPagination = ({ pagination }: PostsPaginationProps) => {
   if (totalPage <= 1) return null;
 
   return (
-    <nav aria-label="Posts pagination">
-      <ul className="pagination justify-content-end">
-        <li className={`page-item ${page === 1 ? "disabled" : ""}`}>
-          <button className="page-link" onClick={() => handleChange(page - 1)}>
-            Previous
-          </button>
-        </li>
+    <div className="paginationMinimal">
+      <div className="paginationControls">
+        <button
+          className={`paginationBtn ${page === 1 ? "disabled" : ""}`}
+          onClick={() => handleChange(page - 1)}
+          disabled={page === 1}
+          title="Previous page"
+        >
+          <FaChevronLeft />
+        </button>
 
-        {isGetDesktopDevice &&
-          totalPage > 10 &&
-          pages.map((p) => (
-            <li key={p} className={`page-item ${p === page ? "active" : ""}`}>
-              <button className="page-link" onClick={() => handleChange(p)}>
+        {isGetDesktopDevice && totalPage > 10 && (
+          <div className="paginationPages">
+            {pages.map((p) => (
+              <button
+                key={p}
+                className={`paginationPage ${p === page ? "active" : ""}`}
+                onClick={() => handleChange(p)}
+                title={`Go to page ${p}`}
+              >
                 {p}
               </button>
-            </li>
-          ))}
+            ))}
+          </div>
+        )}
 
-        <li className={`page-item ${page === totalAll ? "disabled" : ""}`}>
-          <button className="page-link" onClick={() => handleChange(page + 1)}>
-            Next
-          </button>
-        </li>
-      </ul>
-
-      <div className="text-end text-muted small mt-2">
-        Page {page} of {totalPage} • {totalAll} items • {limit}/page
+        <button
+          className={`paginationBtn ${page === totalPage ? "disabled" : ""}`}
+          onClick={() => handleChange(page + 1)}
+          disabled={page === totalPage}
+          title="Next page"
+        >
+          <FaChevronRight />
+        </button>
       </div>
-    </nav>
+
+      <div className="paginationInfo">
+        <span className="paginationStat">
+          Page <strong>{page}</strong> of <strong>{totalPage}</strong>
+        </span>
+        <span className="paginationDivider">•</span>
+        <span className="paginationStat">
+          <strong>{totalAll}</strong> items
+        </span>
+        <span className="paginationDivider">•</span>
+        <span className="paginationStat">
+          <strong>{limit}</strong>/page
+        </span>
+      </div>
+    </div>
   );
 };

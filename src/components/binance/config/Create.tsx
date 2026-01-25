@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useRef } from "react";
 import { Button, FormControl } from "react-bootstrap";
+import { FaFloppyDisk, FaGear, FaKey } from "react-icons/fa6";
 import { LoadingIcon } from "../../common/loading";
 import { useCreate } from "./hooks/useCreate";
 
@@ -10,6 +11,7 @@ export const CreateSetting = ({
 }) => {
   const refs = useRef({});
   const { createData, isLoading } = useCreate();
+
   const submitHandle = async () => {
     setResult(false);
     const key = refs.current["key"];
@@ -32,24 +34,40 @@ export const CreateSetting = ({
   return (
     <>
       {isLoading && <LoadingIcon />}
-      <div className="d-flex flex-column gap-3">
-        <FormControl
-          ref={(el) => {
-            refs.current["key"] = el;
-          }}
-          id="key"
-          placeholder="Key:"
-          required
-        />
-        <FormControl
-          ref={(el) => {
-            refs.current["config"] = el;
-          }}
-          id="config"
-          placeholder="config:"
-          required
-        />
-        <Button onClick={submitHandle}>Save</Button>
+      <div className="createSettingForm">
+        <div className="createFormGroup">
+          <label className="createFormLabel">
+            <FaKey /> Key
+          </label>
+          <FormControl
+            ref={(el) => {
+              refs.current["key"] = el;
+            }}
+            id="key"
+            placeholder="Enter key name"
+            className="createFormInput"
+            required
+          />
+        </div>
+
+        <div className="createFormGroup">
+          <label className="createFormLabel">
+            <FaGear /> Value
+          </label>
+          <FormControl
+            ref={(el) => {
+              refs.current["config"] = el;
+            }}
+            id="config"
+            placeholder="Enter value"
+            className="createFormInput"
+            required
+          />
+        </div>
+
+        <Button onClick={submitHandle} className="createSubmitBtn">
+          <FaFloppyDisk /> Save Setting
+        </Button>
       </div>
     </>
   );

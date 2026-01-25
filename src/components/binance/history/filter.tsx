@@ -1,10 +1,13 @@
 import { useHistoryFilterStore } from "@/src/stores/history_filter";
 import { useEffect, useState } from "react";
-import { Col, Form, Row, Button } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
+import { FaCalendar, FaCoins, FaSearchengin } from "react-icons/fa6";
+
 interface FormData {
   symbol: string;
   monthYear: string;
 }
+
 export const Filter = () => {
   const symbolLists = ["BNBUSDT"];
   const [formData, setFormData] = useState<FormData>({
@@ -22,42 +25,46 @@ export const Filter = () => {
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // ✅ Prevent page refresh
+    e.preventDefault();
     update(formData);
   };
 
   useEffect(() => {
     setFormData({ symbol: symbol, monthYear: monthYear });
   }, [symbol, monthYear]);
+
   return (
-    <div className="pt-2">
-      <Form onSubmit={(e) => handleSubmit(e)}>
-        <Row>
-          <Col md={4}>
-            <Form.Group
-              className="form-outline mb-4"
-              controlId="formBasicEmail"
-            >
+    <div className="filterContainer">
+      <Form onSubmit={(e) => handleSubmit(e)} className="filterForm">
+        <Row className="g-3 align-items-end">
+          <Col xs={12} sm={6} md={4}>
+            <Form.Group className="filterGroup">
+              <Form.Label className="filterLabel">
+                <FaCalendar /> Month/Year
+              </Form.Label>
               <Form.Control
                 name="monthYear"
                 type="month"
                 value={formData.monthYear}
                 required
-                placeholder="Enter symbol"
+                placeholder="Select month"
                 onChange={handleChange}
+                className="filterInput"
               />
             </Form.Group>
           </Col>
-          <Col md={4}>
-            <Form.Group
-              className="form-outline mb-4"
-              controlId="formBasicEmail"
-            >
+
+          <Col xs={12} sm={6} md={4}>
+            <Form.Group className="filterGroup">
+              <Form.Label className="filterLabel">
+                <FaCoins /> Symbol
+              </Form.Label>
               <Form.Select
                 name="symbol"
                 value={formData.symbol}
                 onChange={handleChange}
                 required
+                className="filterSelect"
               >
                 <option key={1} value={""}>
                   Please select
@@ -70,15 +77,11 @@ export const Filter = () => {
               </Form.Select>
             </Form.Group>
           </Col>
-          <Col md={4}>
-            <Form.Group
-              className="form-outline mb-4"
-              controlId="formBasicEmail"
-            >
-              <Button type="submit" className="w-100">
-                Search
-              </Button>
-            </Form.Group>
+
+          <Col xs={12} md={4}>
+            <Button type="submit" className="filterBtn w-100">
+              <FaSearchengin /> Search
+            </Button>
           </Col>
         </Row>
       </Form>
