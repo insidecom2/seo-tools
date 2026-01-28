@@ -85,6 +85,7 @@ export const FutureXgbLogsComm = () => {
               <th>Price</th>
               <th>Expected Pct</th>
               <th>Trend</th>
+              <th>Entry</th>
             </tr>
           </thead>
           <tbody>
@@ -153,6 +154,7 @@ export const FutureXgbLogsComm = () => {
                       </span>
                     </td>
                     <td className="trendCell">{body.trend}</td>
+                    <td className="trendCell">{body.entry_type ?? "-"}</td>
                   </tr>
                 );
               })}
