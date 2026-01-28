@@ -1,36 +1,30 @@
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  Row,
-  Spinner,
-} from "react-bootstrap";
+import React, { useState } from "react";
 import { HTTP_STATUS_CODE } from "../utils/constants";
 import Http from "../utils/http";
 
-export interface dataFormData {
+export interface LoginFormData {
   email: string;
   password: string;
   rememberPassword: number;
 }
+
 export default function Login() {
-  const defaultForm: dataFormData = {
+  const defaultForm: LoginFormData = {
     email: "",
     password: "",
     rememberPassword: 0,
   };
-  const [formData, setFormData] = useState<dataFormData>(defaultForm);
+  const [formData, setFormData] = useState<LoginFormData>(defaultForm);
   const [alert, setAlert] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const handleSubmit = async (e) => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (loading == false && e.target.checkValidity()) {
+    const form = e.currentTarget as HTMLFormElement;
+    if (!loading && form.checkValidity()) {
       setAlert("");
       setLoading(true);
       try {
@@ -43,96 +37,135 @@ export default function Login() {
             setAlert(response.data.message);
           }
         }
-      } catch (error) {}
+      } catch (error) {
+        setAlert("Login failed. Please try again.");
+      }
       setLoading(false);
     }
   };
-  const handleChange = (ele) => {
-    const { name, value } = ele.target;
-    if (name == "rememberPassword") {
-      setFormData((formData) => ({
-        ...formData,
-        [name]: ele.target.checked ? 1 : 0,
-      }));
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target as HTMLInputElement;
+    if (type === "checkbox") {
+      setFormData((prev) => ({ ...prev, [name]: checked ? 1 : 0 }));
     } else {
-      setFormData((formData) => ({
-        ...formData,
-        [name]: value,
-      }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
+
+  const style: { [k: string]: React.CSSProperties } = {
+    page: {
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "#f7f7f8",
+      padding: "24px",
+    },
+    card: {
+      width: "100%",
+      maxWidth: 420,
+      background: "#fff",
+      padding: 28,
+      borderRadius: 12,
+      boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
+      boxSizing: "border-box",
+    },
+    title: { margin: 0, marginBottom: 18, fontSize: 20, textAlign: "center" },
+    label: { display: "block", fontSize: 13, marginBottom: 6, color: "#333" },
+    input: {
+      width: "100%",
+      padding: "10px 12px",
+      borderRadius: 8,
+      border: "1px solid #e6e6e9",
+      marginBottom: 14,
+      fontSize: 14,
+      boxSizing: "border-box",
+    },
+    checkboxRow: {
+      display: "flex",
+      alignItems: "center",
+      gap: 8,
+      marginBottom: 14,
+    },
+    button: {
+      width: "100%",
+      padding: "10px 14px",
+      borderRadius: 8,
+      border: "none",
+      background: "#111827",
+      color: "#fff",
+      fontSize: 15,
+      cursor: "pointer",
+    },
+    buttonDisabled: { opacity: 0.6, cursor: "default" },
+    alert: {
+      marginTop: 12,
+      color: "#c53030",
+      textAlign: "center",
+      fontSize: 14,
+    },
+  };
+
   return (
-    <Container className=" py-5 h-100">
-      <Row className="row d-flex justify-content-center align-items-center h-100">
-        <Col md={6}>
-          <Card className="card shadow-2-strong rounded">
-            <Card.Body className="p-5">
-              <h3 className=" text-center">Sign In</h3>
-              <Form onSubmit={(e) => handleSubmit(e)}>
-                <Form.Group
-                  className="form-outline mb-4"
-                  controlId="formBasicEmail"
-                >
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    name="email"
-                    autoComplete="off"
-                    type="email"
-                    value={formData.email}
-                    placeholder="Enter email"
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group
-                  className="form-outline mb-4"
-                  controlId="formBasicPassword"
-                >
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    name="password"
-                    autoComplete="off"
-                    type="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Enter password"
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check
-                    type="checkbox"
-                    name="rememberPassword"
-                    onChange={handleChange}
-                    label="Remember password"
-                  />
-                </Form.Group>
-                <Button variant="danger" className="w-100" type="submit">
-                  Login
-                </Button>
-              </Form>
+    <div style={style.page}>
+      <form onSubmit={handleSubmit} style={style.card} noValidate>
+        <h2 style={style.title}>Sign in</h2>
 
-              {loading && (
-                <div className="py-3 text-center">
-                  <Spinner
-                    as="span"
-                    variant="success"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                    animation="border"
-                  />{" "}
-                  <span>Loading</span>{" "}
-                </div>
-              )}
+        <label style={style.label} htmlFor="email">
+          Email address
+        </label>
+        <input
+          id="email"
+          name="email"
+          autoComplete="off"
+          type="email"
+          value={formData.email}
+          placeholder="you@example.com"
+          onChange={handleChange}
+          style={style.input}
+          required
+        />
 
-              {alert != "" && (
-                <div className="py-3 text-center">
-                  <span>{alert}</span>
-                </div>
-              )}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+        <label style={style.label} htmlFor="password">
+          Password
+        </label>
+        <input
+          id="password"
+          name="password"
+          autoComplete="off"
+          type="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="••••••••"
+          style={style.input}
+          required
+        />
+
+        <div style={style.checkboxRow}>
+          <input
+            id="remember"
+            name="rememberPassword"
+            type="checkbox"
+            onChange={handleChange}
+            checked={formData.rememberPassword === 1}
+          />
+          <label htmlFor="remember">Remember password</label>
+        </div>
+
+        <button
+          type="submit"
+          style={{
+            ...(style.button as object),
+            ...(loading ? style.buttonDisabled : {}),
+          }}
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "Login"}
+        </button>
+
+        {alert && <div style={style.alert}>{alert}</div>}
+      </form>
+    </div>
   );
 }
