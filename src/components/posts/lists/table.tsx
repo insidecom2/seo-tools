@@ -1,59 +1,87 @@
 import { PaginationPosts } from "@/src/interface/pagination";
 import { useModalStore } from "@/src/stores/modal";
+import { SyncStatus } from "@/src/types/syncStatus";
 import dayjs from "dayjs";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Badge, Button, Table } from "react-bootstrap";
-import { FaImage, FaLink, FaPencil, FaTrash, FaVideo } from "react-icons/fa6";
+import {
+  FaImage,
+  FaLink,
+  FaPencil,
+  FaRotate,
+  FaTrash,
+  FaVideo,
+} from "react-icons/fa6";
 import ModalCommon from "../../common/modal";
 import { EditDescription } from "../edit/editDesc";
 import { SocialPost } from "../hooks/interface";
+import Sync from "../sync/sync";
 import { UploadPostFile } from "./uploadFile";
 
 interface PostsListProps {
   posts?: SocialPost[];
   pagination?: PaginationPosts;
 }
-
+interface syncListProps {
+  facebook: SyncStatus;
+  website: SyncStatus;
+  googleBusiness: SyncStatus;
+  title: string;
+  id: number;
+}
 interface ModalState {
   id: number;
   contentDesc: string;
-  title: string;
+  titlePost: string;
 }
 
 export const PostListTable = ({ posts, pagination }: PostsListProps) => {
   const [editContent, setEditContent] = useState<ModalState>({
     id: 0,
     contentDesc: "",
-    title: "",
+    titlePost: "",
   });
-  const [video, setVideo] = useState<File | null>(null);
-  const [image, setImage] = useState<File | null>(null);
-
+  const [modalType, setModalType] = useState<string>("");
+  const [syncContent, setSyncContent] = useState<syncListProps>({
+    facebook: "pending",
+    website: "pending",
+    googleBusiness: "pending",
+    title: "",
+    id: 0,
+  });
   const { setShow } = useModalStore();
-
-  useEffect(() => {
-    if (video) {
-      console.log("Selected video file:", video);
-    }
-  }, [video]);
-
-  useEffect(() => {
-    if (image) {
-      console.log("Selected image file:", image);
-    }
-  }, [image]);
 
   const handleEditDescription = (
     postId: number,
     content: string,
     title: string,
   ) => {
+    setModalType("editPost");
     setEditContent((prev) => ({
       ...prev,
       id: postId,
       contentDesc: content,
       title: title,
+    }));
+    setShow();
+  };
+
+  const handlerSync = async ({
+    facebook,
+    website,
+    googleBusiness,
+    title,
+    id,
+  }: syncListProps) => {
+    setModalType("syncPost");
+    setSyncContent((prev) => ({
+      ...prev,
+      facebook: facebook,
+      website: website,
+      googleBusiness: googleBusiness,
+      title: title,
+      id: id,
     }));
     setShow();
   };
@@ -198,21 +226,44 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                           ? "..."
                           : ""}
                       </div>
-                      <Button
-                        variant="outline-primary"
-                        size="sm"
-                        className="editBtn"
-                        title="Edit Description"
-                        onClick={() =>
-                          handleEditDescription(
-                            row.id,
-                            row.description,
-                            row.title,
-                          )
-                        }
+                      <span
+                        className="d-inline-flex align-items-center ms-2"
+                        role="group"
                       >
-                        <FaPencil />
-                      </Button>
+                        <Button
+                          variant="outline-primary"
+                          size="sm"
+                          className="editBtn me-1"
+                          title="Edit Description"
+                          onClick={() =>
+                            handleEditDescription(
+                              row.id,
+                              row.description,
+                              row.title,
+                            )
+                          }
+                        >
+                          <FaPencil />
+                        </Button>
+                        <Button
+                          variant="outline-primary"
+                          size="sm"
+                          className="editBtn"
+                          title="Edit Description"
+                          onClick={() =>
+                            handlerSync({
+                              facebook: row.facebookStatus as SyncStatus,
+                              website: row.webStatus as SyncStatus,
+                              googleBusiness:
+                                row.googleBusinessStatus as SyncStatus,
+                              title: row.title,
+                              id: row.id,
+                            })
+                          }
+                        >
+                          <FaRotate />
+                        </Button>
+                      </span>
                     </div>
                   </td>
                 </tr>
@@ -221,13 +272,15 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
         </Table>
       </div>
       <ModalCommon
-        title="Edit post"
+        title={modalType == "editPost" ? "Edit post" : "Sync Post"}
         Compo={
-          <EditDescription
-            id={editContent.id}
-            contentDesc={editContent.contentDesc}
-            titlePost={editContent.title}
-          />
+          modalType == "editPost" ? (
+            <EditDescription {...editContent} />
+          ) : modalType == "syncPost" ? (
+            <Sync {...syncContent} />
+          ) : (
+            <div></div>
+          )
         }
       />
     </>
