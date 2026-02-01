@@ -1,5 +1,3 @@
-import { useAlertStore } from "@/src/stores/alert";
-import { useModalStore } from "@/src/stores/modal";
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import TinyEditor from "../../common/tinyEditor";
@@ -17,8 +15,6 @@ export const EditDescription = ({
   const [content, setContent] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const updatePost = useUpdateById(id);
-  const { setClose } = useModalStore();
-  const { setShow, setMessage } = useAlertStore();
 
   useEffect(() => {
     if (contentDesc) {
@@ -29,16 +25,9 @@ export const EditDescription = ({
     }
   }, [contentDesc, titlePost]);
 
-  useEffect(() => {
-    console.log("Content updated:", content);
-  }, [content]);
-
   const handleSubmit = async () => {
     try {
       await updatePost.mutateAsync({ description: content, title: title });
-      setMessage("Successfully updated content");
-      setShow(true);
-      setClose();
     } catch (error) {
       console.error("Error updating post description:", error);
     }

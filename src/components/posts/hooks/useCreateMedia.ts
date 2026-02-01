@@ -1,31 +1,31 @@
 import { useAlertStore } from "@/src/stores/alert";
-import { useModalStore } from "@/src/stores/modal";
 import Http from "@/src/utils/http";
 import {
   MutationFunction,
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { SocialPost } from "./interface";
 
-const useUpdateById = (id: number) => {
+interface CreateMediaProps {
+  source: string;
+  sourceUrl: string;
+}
+const useCreateMedia = () => {
   const endpoint = process.env.NEXT_PUBLIC_API_OPT_SYNC_ENDPOINT;
-  const url = `${endpoint}/v1/posts/${id}`;
+  const url = `${endpoint}/v1/sync/media`;
   const queryClient = useQueryClient();
-  const mutationFn: MutationFunction<SocialPost> = async (data: SocialPost) => {
-    const response = await Http.patch(url, data);
+  const mutationFn: MutationFunction<CreateMediaProps> = async (
+    data: CreateMediaProps,
+  ) => {
+    const response = await Http.post(url, data);
     return response.data;
   };
-  const { setClose } = useModalStore();
+
   const { setShow, setMessage, setVariant } = useAlertStore();
 
   return useMutation({
     mutationFn,
     onSuccess: () => {
-      setMessage("Successfully updated content");
-      setVariant("success");
-      setShow(true);
-      setClose();
       queryClient.invalidateQueries({
         queryKey: ["posts-lists"],
       });
@@ -38,4 +38,4 @@ const useUpdateById = (id: number) => {
   });
 };
 
-export default useUpdateById;
+export default useCreateMedia;
