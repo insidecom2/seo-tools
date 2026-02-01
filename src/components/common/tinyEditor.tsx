@@ -4,8 +4,8 @@ import { LoadingIcon } from "@/src/components/common/loading";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 
-const Editor = dynamic(
-  () => import("@tinymce/tinymce-react").then((m) => m.Editor),
+const Editor: any = dynamic(
+  () => import("@tinymce/tinymce-react").then((m: any) => m.Editor),
   { ssr: false },
 );
 
@@ -48,7 +48,8 @@ export default function TinyEditor({
           toolbar:
             "undo redo | bold italic | \
        alignleft aligncenter alignright | \
-       bullist numlist | removeformat",
+       bullist numlist | removeformat\n\
+       link media",
         }}
       />
     </div>
