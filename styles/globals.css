@@ -85,6 +85,10 @@ item-center {
   background-color: transparent !important;
 }
 
+.tox-tinymce-aux {
+  z-index: 1056 !important; /* สูงกว่า bootstrap modal (1055) */
+}
+
 .tableHead {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
   color: white;

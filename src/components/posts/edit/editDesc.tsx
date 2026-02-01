@@ -25,6 +25,7 @@ export const EditDescription = ({
     }
   }, [contentDesc, titlePost]);
 
+  useEffect(() => {}, [titlePost]);
   const handleSubmit = async () => {
     try {
       await updatePost.mutateAsync({ description: content, title: title });

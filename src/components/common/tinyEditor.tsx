@@ -33,23 +33,32 @@ export default function TinyEditor({
         init={{
           height: 400,
           menubar: false,
-
-          // 🔑 สำคัญ
-          forced_root_block: false,
-          force_br_newlines: true,
-          force_p_newlines: false,
           newline_behavior: "linebreak", // TinyMCE v6+
-
+          dialog_container: "body",
+          forced_root_block: "p", // หรือเอาออกเลยก็ได้
           plugins: [
-            "advlist autolink lists link image charmap preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table code help wordcount",
+            "advlist",
+            "lists",
+            "image",
+            "preview",
+            "anchor",
+
+            "insertdatetime ",
+            "table",
+            "code",
+            "help",
+            "wordcount",
+            "autolink",
+            "media",
+            "link",
           ],
           toolbar:
             "undo redo | bold italic | \
        alignleft aligncenter alignright | \
-       bullist numlist | removeformat\n\
-       link media",
+       bullist numlist | removeformat |\
+        link image media | code",
+          media_live_embeds: true,
+          media_alt_source: false,
         }}
       />
     </div>

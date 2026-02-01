@@ -1,3 +1,4 @@
+import { syncStatus } from "@/src/enums/syncStatus";
 import { PaginationPosts } from "@/src/interface/pagination";
 import { useModalStore } from "@/src/stores/modal";
 import { SyncStatus } from "@/src/types/syncStatus";
@@ -6,12 +7,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { Badge, Button, Table } from "react-bootstrap";
 import {
+  FaFacebook,
   FaImage,
   FaLink,
   FaPencil,
   FaRotate,
   FaTrash,
   FaVideo,
+  FaWordpress,
 } from "react-icons/fa6";
 import ModalCommon from "../../common/modal";
 import { EditDescription } from "../edit/editDesc";
@@ -62,7 +65,7 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
       ...prev,
       id: postId,
       contentDesc: content,
-      title: title,
+      titlePost: title,
     }));
     setShow();
   };
@@ -120,7 +123,17 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                       </span>
                     </div>
                   </td>
-                  <td className="pageCell">{row.pageName}</td>
+                  <td className="pageCell">
+                    {row.pageName}
+                    <p>
+                      {row.facebookStatus === syncStatus.COMPLETED && (
+                        <FaFacebook color="green" />
+                      )}{" "}
+                      {row.webStatus === syncStatus.COMPLETED && (
+                        <FaWordpress color="green" />
+                      )}
+                    </p>
+                  </td>
                   <td className="dateCell">
                     <Badge bg="info">
                       {dayjs(row.createdTime).format("DD-MM-YYYY")}
