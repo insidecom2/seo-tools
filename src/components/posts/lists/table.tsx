@@ -126,12 +126,34 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                   <td className="pageCell">
                     {row.pageName}
                     <p>
-                      {row.facebookStatus === syncStatus.COMPLETED && (
-                        <FaFacebook color="green" />
-                      )}{" "}
-                      {row.webStatus === syncStatus.COMPLETED && (
-                        <FaWordpress color="green" />
-                      )}
+                      {row.facebookStatus === syncStatus.COMPLETED &&
+                        (row.permalinkUrl ? (
+                          <Link href={row.permalinkUrl} passHref legacyBehavior>
+                            <a
+                              href={row.permalinkUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <FaFacebook color="green" />
+                            </a>
+                          </Link>
+                        ) : (
+                          <FaFacebook color="green" />
+                        ))}{" "}
+                      {row.webStatus === syncStatus.COMPLETED &&
+                        (row.webLink ? (
+                          <Link href={row.webLink} passHref legacyBehavior>
+                            <a
+                              href={row.webLink}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <FaWordpress color="green" />
+                            </a>
+                          </Link>
+                        ) : (
+                          <FaWordpress color="green" />
+                        ))}
                     </p>
                   </td>
                   <td className="dateCell">
