@@ -18,5 +18,9 @@ export interface SocialPost {
   webStatus: "pending" | "completed" | "failed" | string;
   imageLinkRaw: string;
   videoLinkRaw: string;
+  webLink: string;
+  googleBusinessLink: string;
+  youtubeLink: string;
+  tikTokLink: string;
   title: string;
 }
