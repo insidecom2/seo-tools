@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Row, Table } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { LoadingIcon } from "../../common/loading";
+import { symbols } from "./const";
 import useFutureLogs from "./hook/useLogs";
 
 export const FutureXgbLogsComm = () => {
@@ -71,6 +72,31 @@ export const FutureXgbLogsComm = () => {
           >
             <FaChevronRight />
           </Button>
+        </Col>
+      </Row>
+      <Row className="pb-3">
+        <Col xs={12}>
+          <div className="d-flex align-items-center gap-2">
+            <label className="mb-0">Symbol:</label>
+            <select
+              className="form-select"
+              style={{ width: 160 }}
+              value={paginationTable.symbol}
+              onChange={(e) =>
+                setPaginationTable((last) => ({
+                  ...last,
+                  symbol: e.target.value,
+                  page: 1,
+                }))
+              }
+            >
+              {symbols.map((sym) => (
+                <option key={sym} value={sym}>
+                  {sym}
+                </option>
+              ))}
+            </select>
+          </div>
         </Col>
       </Row>
       <div className="tableContainer">
