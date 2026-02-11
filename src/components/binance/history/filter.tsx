@@ -2,6 +2,7 @@ import { useHistoryFilterStore } from "@/src/stores/history_filter";
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { FaCalendar, FaCoins, FaSearchengin } from "react-icons/fa6";
+import { symbols } from "../future_xgb_log/const";
 
 interface FormData {
   symbol: string;
@@ -9,7 +10,6 @@ interface FormData {
 }
 
 export const Filter = () => {
-  const symbolLists = ["BNBUSDT"];
   const [formData, setFormData] = useState<FormData>({
     symbol: "",
     monthYear: "",
@@ -69,7 +69,7 @@ export const Filter = () => {
                 <option key={1} value={""}>
                   Please select
                 </option>
-                {symbolLists.map((val) => (
+                {symbols.map((val) => (
                   <option key={val} value={val}>
                     {val}
                   </option>
