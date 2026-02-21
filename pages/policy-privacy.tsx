@@ -6,8 +6,8 @@ const PolicyPrivacy: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Privacy Policy - SEO Tools</title>
-        <meta name="description" content="Privacy Policy for SEO Tools" />
+        <title>Privacy Policy - Optimus Sync</title>
+        <meta name="description" content="Privacy Policy for Optimus Sync" />
       </Head>
 
       <main style={{ padding: "2rem", maxWidth: 900, margin: "0 auto" }}>

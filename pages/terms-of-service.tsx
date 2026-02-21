@@ -6,8 +6,8 @@ const TermsOfService: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Terms of Service - SEO Tools</title>
-        <meta name="description" content="Terms of Service for SEO Tools" />
+        <title>Terms of Service - Optimus Sync</title>
+        <meta name="description" content="Terms of Service for Optimus Sync" />
       </Head>
 
       <main style={{ padding: "2rem", maxWidth: 900, margin: "0 auto" }}>
