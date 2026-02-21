@@ -7,6 +7,10 @@ export default function Home() {
       <Head>
         <title>Optimus Sync - sync video youtube</title>
         <meta name="description" content="Landing page" />
+        <meta
+          name="google-site-verification"
+          content="iH1_k24U67qVruYsapwDoVPXHmipyzxngijggGUEAtU"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
