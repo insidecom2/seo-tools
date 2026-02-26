@@ -109,10 +109,11 @@ export const FutureXgbLogsComm = () => {
               <th>Label</th>
               <th>Confidence</th>
               <th>Price</th>
-              <th>Expected Pct</th>
+              <th>Exp Pct</th>
               <th>Trend</th>
               <th>Entry</th>
               <th>Adx</th>
+              <th>RSI</th>
             </tr>
           </thead>
           <tbody>
@@ -184,6 +185,9 @@ export const FutureXgbLogsComm = () => {
                     <td className="trendCell">{body.entry_type ?? "-"}</td>
                     <td className="trendCell">
                       {DecimalFormat(body.adx) ?? "-"}
+                    </td>
+                    <td className="trendCell">
+                      {DecimalFormat(body.rsi) ?? "-"}
                     </td>
                   </tr>
                 );

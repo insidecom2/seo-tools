@@ -1,5 +1,6 @@
 const CurrencyFormat = (val: number, format: string = "en-US") => {
-  return new Intl.NumberFormat("en-US", {
+  if (val === null || val === undefined) return "-";
+  return new Intl.NumberFormat(format, {
     style: "currency",
     currency: "USD",
     minimumFractionDigits: 2,
@@ -7,6 +8,7 @@ const CurrencyFormat = (val: number, format: string = "en-US") => {
 };
 
 const DecimalFormat = (val: number, decimal: number = 2) => {
+  if (val === null || val === undefined) return "-";
   return new Intl.NumberFormat("en-US", {
     minimumFractionDigits: decimal,
     maximumFractionDigits: decimal,

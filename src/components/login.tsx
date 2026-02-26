@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { HTTP_STATUS_CODE } from "../utils/constants";
 import Http from "../utils/http";
 
@@ -19,6 +20,7 @@ export default function Login() {
   const [formData, setFormData] = useState<LoginFormData>(defaultForm);
   const [alert, setAlert] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -60,7 +62,7 @@ export default function Login() {
       alignItems: "center",
       justifyContent: "center",
       background: "#f7f7f8",
-      padding: "24px",
+      padding: "12px",
     },
     card: {
       width: "100%",
@@ -105,6 +107,25 @@ export default function Login() {
       textAlign: "center",
       fontSize: 14,
     },
+    passwordContainer: {
+      position: "relative" as const,
+      marginBottom: 14,
+    },
+    passwordIconButton: {
+      position: "absolute" as const,
+      right: 10,
+      top: "35%",
+      transform: "translateY(-50%)",
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      fontSize: 18,
+      padding: 0,
+      color: "#666",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
   };
 
   return (
@@ -130,17 +151,27 @@ export default function Login() {
         <label style={style.label} htmlFor="password">
           Password
         </label>
-        <input
-          id="password"
-          name="password"
-          autoComplete="off"
-          type="password"
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="••••••••"
-          style={style.input}
-          required
-        />
+        <div style={style.passwordContainer}>
+          <input
+            id="password"
+            name="password"
+            autoComplete="off"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="••••••••"
+            style={style.input}
+            required
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            style={style.passwordIconButton}
+            tabIndex={-1}
+          >
+            {showPassword ? <FaEye /> : <FaEyeSlash />}
+          </button>
+        </div>
 
         <div style={style.checkboxRow}>
           <input
