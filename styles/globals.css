@@ -292,6 +292,7 @@ item-center {
 .symbolCell {
   font-weight: 600;
   color: #667eea;
+  text-align: center;
 }
 
 .signalRow {
@@ -404,7 +405,7 @@ item-center {
 
 .returnCell {
   font-weight: 600;
-  text-align: right;
+  text-align: center;
 }
 
 .returnValue {
