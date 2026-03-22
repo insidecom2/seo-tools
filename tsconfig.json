@@ -20,5 +20,5 @@
     }
   },
   "include": ["next-env.d.ts", "pages/**/*", "src/**/*"],
-  "exclude": ["node_modules", "dist", "prisma"]
+  "exclude": ["node_modules", "prisma", ".next", ".idea"]
 }

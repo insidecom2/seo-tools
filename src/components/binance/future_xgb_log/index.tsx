@@ -1,48 +1,32 @@
 import { DateTimeConvert } from "@/src/utils/datetime";
 import { DecimalFormat } from "@/src/utils/format";
 
-import { useEffect, useState } from "react";
+import { useFutureFilterStore } from "@/src/stores/future_filter";
+import { useEffect } from "react";
 import { Button, Col, Row, Table } from "react-bootstrap";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { LoadingIcon } from "../../common/loading";
-import { symbols } from "./const";
+import { FutureXgbLogsFilter } from "./filter";
 import useFutureLogs from "./hook/useLogs";
 
 export const FutureXgbLogsComm = () => {
   const { getLogs, isLoading, lists, pagination } = useFutureLogs();
-  const [paginationTable, setPaginationTable] = useState({
-    symbol: "BNBUSDT",
-    page: 1,
-    limit: 50,
-    type: "XGB",
-  });
-
-  const updatePage = (page: number) => {
-    setPaginationTable((last) => ({ ...last, page }));
-  };
+  const { page, symbol, limit, type, entry, updatePage } =
+    useFutureFilterStore();
 
   const changePageStep = (type: string) => {
-    if (type === "left" && paginationTable.page > 1) {
-      setPaginationTable((last) => ({
-        ...last,
-        page: paginationTable.page - 1,
-      }));
+    if (type === "left" && page > 1) {
+      updatePage({ page: page - 1 });
       return;
-    } else if (
-      type === "right" &&
-      paginationTable.page < parseInt(pagination?.page_all)
-    ) {
-      setPaginationTable((last) => ({
-        ...last,
-        page: paginationTable.page + 1,
-      }));
+    } else if (type === "right" && page < parseInt(pagination?.page_all)) {
+      updatePage({ page: page + 1 });
       return;
     }
   };
 
   useEffect(() => {
-    getLogs(paginationTable);
-  }, [paginationTable]);
+    getLogs({ symbol, page, limit, type, entry });
+  }, [symbol, page, limit, type, entry]);
 
   if (isLoading || !pagination) return <LoadingIcon />;
 
@@ -60,7 +44,7 @@ export const FutureXgbLogsComm = () => {
         <Col xs={10}>
           <div className="px-2 d-flex gap-2">
             <h2>
-              Future Logs ({paginationTable.page}/{pagination?.page_all})
+              Future Logs ({page}/{pagination?.page_all})
             </h2>
             <h2>Total : {DecimalFormat(pagination?.all, 0)}</h2>
           </div>
@@ -76,27 +60,7 @@ export const FutureXgbLogsComm = () => {
       </Row>
       <Row className="pb-3">
         <Col xs={12}>
-          <div className="d-flex align-items-center gap-2">
-            <label className="mb-0">Symbol:</label>
-            <select
-              className="form-select"
-              style={{ width: 160 }}
-              value={paginationTable.symbol}
-              onChange={(e) =>
-                setPaginationTable((last) => ({
-                  ...last,
-                  symbol: e.target.value,
-                  page: 1,
-                }))
-              }
-            >
-              {symbols.map((sym) => (
-                <option key={sym} value={sym}>
-                  {sym}
-                </option>
-              ))}
-            </select>
-          </div>
+          <FutureXgbLogsFilter />
         </Col>
       </Row>
       <div className="tableContainer">
@@ -121,11 +85,7 @@ export const FutureXgbLogsComm = () => {
               lists.map((row, index) => {
                 const body = JSON.parse(row.body_json);
                 const labelExpected = ["BUY", "SELL"].includes(body.label);
-                const isHighConfidence =
-                  parseFloat(body.confidence) >= 0.8 &&
-                  Math.abs(parseFloat(body.expected_future_return_pct)) >=
-                    0.45 &&
-                  labelExpected;
+                const isHighConfidence = labelExpected;
                 return (
                   <tr
                     key={row.timestamp}
@@ -134,8 +94,7 @@ export const FutureXgbLogsComm = () => {
                     }
                   >
                     <td className="indexCell">
-                      {(paginationTable.page - 1) * paginationTable.limit +
-                        (index + 1)}
+                      {(page - 1) * limit + (index + 1)}
                     </td>
                     <td className="symbolCell">
                       <a
@@ -182,7 +141,15 @@ export const FutureXgbLogsComm = () => {
                       </span>
                     </td>
                     <td className="trendCell">{body.trend}</td>
-                    <td className="trendCell">{body.entry_type ?? "-"}</td>
+                    <td className="trendCell">
+                      {body.entry_type == "None" ? (
+                        "-"
+                      ) : (
+                        <span className={`labelBadge buy`}>
+                          {body.entry_type}
+                        </span>
+                      )}
+                    </td>
                     <td className="trendCell">
                       {DecimalFormat(body.adx) ?? "-"}
                     </td>
@@ -195,7 +162,7 @@ export const FutureXgbLogsComm = () => {
           </tbody>
         </Table>
       </div>
-      <Row className="pb-3">
+      <Row className="py-3">
         <Col xs={1}>
           <Button
             onClick={() => changePageStep("left")}
@@ -207,7 +174,7 @@ export const FutureXgbLogsComm = () => {
         <Col xs={10}>
           <div className="px-2 d-flex gap-2">
             <h2>
-              Future Logs ({paginationTable.page}/{pagination?.page_all})
+              Future Logs ({page}/{pagination?.page_all})
             </h2>
             <h2>Total : {DecimalFormat(pagination?.all, 0)}</h2>
           </div>
