@@ -6,3 +6,5 @@ export const symbols = [
   "XRPUSDT",
   "ADAUSDT",
 ];
+
+export const entry = ["SIDEWAY", "CONTINUATION", "BOS", "PULLBACK"];
