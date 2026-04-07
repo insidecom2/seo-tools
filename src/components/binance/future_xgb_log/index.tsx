@@ -1,24 +1,24 @@
-import { DateTimeConvert } from "@/src/utils/datetime";
-import { DecimalFormat } from "@/src/utils/format";
+import { DateTimeConvert } from '@/src/utils/datetime';
+import { DecimalFormat } from '@/src/utils/format';
 
-import { useFutureFilterStore } from "@/src/stores/future_filter";
-import { useEffect } from "react";
-import { Button, Col, Row, Table } from "react-bootstrap";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import { LoadingIcon } from "../../common/loading";
-import { FutureXgbLogsFilter } from "./filter";
-import useFutureLogs from "./hook/useLogs";
+import { useFutureFilterStore } from '@/src/stores/future_filter';
+import { useEffect } from 'react';
+import { Button, Col, Row, Table } from 'react-bootstrap';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
+import { LoadingIcon } from '../../common/loading';
+import { FutureXgbLogsFilter } from './filter';
+import useFutureLogs from './hook/useLogs';
 
 export const FutureXgbLogsComm = () => {
   const { getLogs, isLoading, lists, pagination } = useFutureLogs();
-  const { page, symbol, limit, type, entry, updatePage } =
+  const { page, symbol, limit, type, entry, updatePage, reload, setReload } =
     useFutureFilterStore();
 
   const changePageStep = (type: string) => {
-    if (type === "left" && page > 1) {
+    if (type === 'left' && page > 1) {
       updatePage({ page: page - 1 });
       return;
-    } else if (type === "right" && page < parseInt(pagination?.page_all)) {
+    } else if (type === 'right' && page < parseInt(pagination?.page_all)) {
       updatePage({ page: page + 1 });
       return;
     }
@@ -26,7 +26,8 @@ export const FutureXgbLogsComm = () => {
 
   useEffect(() => {
     getLogs({ symbol, page, limit, type, entry });
-  }, [symbol, page, limit, type, entry]);
+    setReload(false);
+  }, [symbol, page, limit, type, entry, reload]);
 
   if (isLoading || !pagination) return <LoadingIcon />;
 
@@ -35,13 +36,13 @@ export const FutureXgbLogsComm = () => {
       <Row className="pb-3">
         <Col xs={1}>
           <Button
-            onClick={() => changePageStep("left")}
+            onClick={() => changePageStep('left')}
             className="btnPagination"
           >
             <FaChevronLeft />
           </Button>
         </Col>
-        <Col xs={10}>
+        <Col xs={9} md={10}>
           <div className="px-2 d-flex gap-2">
             <h2>
               Future Logs ({page}/{pagination?.page_all})
@@ -51,7 +52,7 @@ export const FutureXgbLogsComm = () => {
         </Col>
         <Col xs={1} className="text-end">
           <Button
-            onClick={() => changePageStep("right")}
+            onClick={() => changePageStep('right')}
             className="btnPagination"
           >
             <FaChevronRight />
@@ -67,7 +68,7 @@ export const FutureXgbLogsComm = () => {
         <Table bordered hover responsive className="customTable">
           <thead className="tableHead">
             <tr>
-              <th style={{ width: "50px" }}>#</th>
+              <th style={{ width: '50px' }}>#</th>
               <th>Symbol</th>
               <th>DateTime</th>
               <th>Label</th>
@@ -84,13 +85,13 @@ export const FutureXgbLogsComm = () => {
             {lists &&
               lists.map((row, index) => {
                 const body = JSON.parse(row.body_json);
-                const labelExpected = ["BUY", "SELL"].includes(body.label);
+                const labelExpected = ['BUY', 'SELL'].includes(body.label);
                 const isHighConfidence = labelExpected;
                 return (
                   <tr
                     key={row.timestamp}
                     className={
-                      isHighConfidence ? "tableRow xgbSignalRow" : "tableRow"
+                      isHighConfidence ? 'tableRow xgbSignalRow' : 'tableRow'
                     }
                   >
                     <td className="indexCell">
@@ -108,7 +109,7 @@ export const FutureXgbLogsComm = () => {
                     <td className="dateCell">
                       {DateTimeConvert(
                         row.timestamp as string,
-                        "DD/MM/YYYY HH:mm:ss",
+                        'DD/MM/YYYY HH:mm:ss',
                       )}
                     </td>
                     <td className="labelCell">
@@ -121,7 +122,7 @@ export const FutureXgbLogsComm = () => {
                     <td className="confidenceCell">
                       <span
                         className={`confidenceBadge ${
-                          parseFloat(body.confidence) >= 0.8 ? "high" : "low"
+                          parseFloat(body.confidence) >= 0.8 ? 'high' : 'low'
                         }`}
                       >
                         {(parseFloat(body.confidence) * 100).toFixed(1)}%
@@ -132,8 +133,8 @@ export const FutureXgbLogsComm = () => {
                       <span
                         className={`returnValue ${
                           parseFloat(body.expected_future_return_pct) >= 0
-                            ? "positive"
-                            : "negative"
+                            ? 'positive'
+                            : 'negative'
                         }`}
                       >
                         {parseFloat(body.expected_future_return_pct).toFixed(2)}
@@ -142,8 +143,8 @@ export const FutureXgbLogsComm = () => {
                     </td>
                     <td className="trendCell">{body.trend}</td>
                     <td className="trendCell">
-                      {body.entry_type == "None" ? (
-                        "-"
+                      {body.entry_type == 'None' ? (
+                        '-'
                       ) : (
                         <span className={`labelBadge buy`}>
                           {body.entry_type}
@@ -151,10 +152,10 @@ export const FutureXgbLogsComm = () => {
                       )}
                     </td>
                     <td className="trendCell">
-                      {DecimalFormat(body.adx) ?? "-"}
+                      {DecimalFormat(body.adx) ?? '-'}
                     </td>
                     <td className="trendCell">
-                      {DecimalFormat(body.rsi) ?? "-"}
+                      {DecimalFormat(body.rsi) ?? '-'}
                     </td>
                   </tr>
                 );
@@ -165,7 +166,7 @@ export const FutureXgbLogsComm = () => {
       <Row className="py-3">
         <Col xs={1}>
           <Button
-            onClick={() => changePageStep("left")}
+            onClick={() => changePageStep('left')}
             className="btnPagination"
           >
             <FaChevronLeft />
@@ -181,7 +182,7 @@ export const FutureXgbLogsComm = () => {
         </Col>
         <Col xs={1} className="text-end">
           <Button
-            onClick={() => changePageStep("right")}
+            onClick={() => changePageStep('right')}
             className="btnPagination"
           >
             <FaChevronRight />
