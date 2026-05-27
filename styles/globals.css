@@ -88,7 +88,9 @@ item-center {
 .tableContainer {
   background: #ffffff;
   border-radius: 8px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 0;
 }
@@ -1687,6 +1689,9 @@ body {
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   box-shadow: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tableHead {

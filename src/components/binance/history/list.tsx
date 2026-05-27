@@ -21,7 +21,7 @@ export const TableLists = ({ currentData }: { currentData: IObject[] }) => {
   return (
     <div className="pt-2">
       <div className="tableContainer overflow-x-auto">
-        <Table className="customTable">
+        <Table className="customTable min-w-[640px]">
           <TableHeader className="tableHead">
             <TableRow>
               <TableHead style={{ width: "50px" }}>#</TableHead>
