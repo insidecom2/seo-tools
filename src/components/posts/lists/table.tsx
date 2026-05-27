@@ -1,11 +1,20 @@
 import { syncStatus } from "@/src/enums/syncStatus";
 import { PaginationPosts } from "@/src/interface/pagination";
+import { Badge } from "@/src/components/ui/badge";
+import { Button } from "@/src/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/src/components/ui/table";
 import { useModalStore } from "@/src/stores/modal";
 import { SyncStatus } from "@/src/types/syncStatus";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useState } from "react";
-import { Badge, Button, Table } from "react-bootstrap";
 import {
   FaFacebook,
   FaImage,
@@ -91,29 +100,29 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
 
   return (
     <>
-      <div className="tableContainer">
-        <Table striped bordered hover responsive className="customTable">
-          <thead className="tableHead">
-            <tr>
-              <th className="indexCol">#</th>
-              <th>Page</th>
-              <th className="dateCol">DateTime</th>
-              <th>Type</th>
-              <th className="fbCol">FB Cover</th>
-              <th className="fbCol">FB Video</th>
-              <th className="linkCol">Link</th>
-              <th className="mediaCol">Cover</th>
-              <th className="mediaCol">Video</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
+      <div className="tableContainer overflow-x-auto">
+        <Table className="customTable min-w-[1100px]">
+          <TableHeader className="tableHead">
+            <TableRow>
+              <TableHead className="indexCol">#</TableHead>
+              <TableHead>Page</TableHead>
+              <TableHead className="dateCol">DateTime</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead className="fbCol">FB Cover</TableHead>
+              <TableHead className="fbCol">FB Video</TableHead>
+              <TableHead className="linkCol">Link</TableHead>
+              <TableHead className="mediaCol">Cover</TableHead>
+              <TableHead className="mediaCol">Video</TableHead>
+              <TableHead>Description</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {posts &&
               posts.map((row: SocialPost, index: number) => (
-                <tr key={row.id} className="tableRow">
-                  <td className="indexCell">
+                <TableRow key={row.id} className="tableRow">
+                  <TableCell className="indexCell">
                     <div className="indexContent">
-                      <Badge bg="secondary">
+                      <Badge variant="secondary">
                         {pagination
                           ? (pagination.page - 1) * pagination.limit + index + 1
                           : index + 1}
@@ -122,8 +131,8 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                         <FaTrash />
                       </span>
                     </div>
-                  </td>
-                  <td className="pageCell">
+                  </TableCell>
+                  <TableCell className="pageCell">
                     {row.pageName}
                     <p>
                       {row.facebookStatus === syncStatus.COMPLETED &&
@@ -155,14 +164,14 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                           <FaWordpress color="green" />
                         ))}
                     </p>
-                  </td>
-                  <td className="dateCell">
-                    <Badge bg="info">
+                  </TableCell>
+                  <TableCell className="dateCell">
+                    <Badge variant="info">
                       {dayjs(row.createdTime).format("DD-MM-YYYY")}
                     </Badge>
-                  </td>
-                  <td>{row.mediaType}</td>
-                  <td className="mediaCell">
+                  </TableCell>
+                  <TableCell>{row.mediaType}</TableCell>
+                  <TableCell className="mediaCell">
                     {row.fullPicture ? (
                       <Link href={row.fullPicture} passHref legacyBehavior>
                         <a
@@ -177,8 +186,8 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                     ) : (
                       <span className="noMedia">-</span>
                     )}
-                  </td>
-                  <td className="mediaCell">
+                  </TableCell>
+                  <TableCell className="mediaCell">
                     {row.attachmentUrl ? (
                       <Link href={row.attachmentUrl} passHref legacyBehavior>
                         <a
@@ -193,8 +202,8 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                     ) : (
                       <span className="noMedia">-</span>
                     )}
-                  </td>
-                  <td className="mediaCell">
+                  </TableCell>
+                  <TableCell className="mediaCell">
                     {row.permalinkUrl ? (
                       <Link href={row.permalinkUrl} passHref legacyBehavior>
                         <a
@@ -209,8 +218,8 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                     ) : (
                       <span className="noMedia">-</span>
                     )}
-                  </td>
-                  <td className="mediaCell">
+                  </TableCell>
+                  <TableCell className="mediaCell">
                     <div className="mediaActions">
                       {row.imageLinkRaw && (
                         <Link href={row.imageLinkRaw} passHref legacyBehavior>
@@ -230,8 +239,8 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                         uploadType="image"
                       />
                     </div>
-                  </td>
-                  <td className="mediaCell">
+                  </TableCell>
+                  <TableCell className="mediaCell">
                     <div className="mediaActions">
                       {row.videoLinkRaw && (
                         <Link href={row.videoLinkRaw} passHref legacyBehavior>
@@ -251,8 +260,8 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                         uploadType="video"
                       />
                     </div>
-                  </td>
-                  <td className="descriptionCell">
+                  </TableCell>
+                  <TableCell className="descriptionCell">
                     <div className="descriptionContent">
                       <div className="titleText">{row.title}</div>
                       <div className="descriptionText">
@@ -261,14 +270,11 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                           ? "..."
                           : ""}
                       </div>
-                      <span
-                        className="d-inline-flex align-items-center ms-2"
-                        role="group"
-                      >
+                      <span className="ml-2 inline-flex items-center gap-1" role="group">
                         <Button
-                          variant="outline-primary"
+                          variant="outline"
                           size="sm"
-                          className="editBtn me-1"
+                          className="editBtn"
                           title="Edit Description"
                           onClick={() =>
                             handleEditDescription(
@@ -281,10 +287,10 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                           <FaPencil />
                         </Button>
                         <Button
-                          variant="outline-primary"
+                          variant="outline"
                           size="sm"
                           className="editBtn"
-                          title="Edit Description"
+                          title="Sync Post"
                           onClick={() =>
                             handlerSync({
                               facebook: row.facebookStatus as SyncStatus,
@@ -300,10 +306,10 @@ export const PostListTable = ({ posts, pagination }: PostsListProps) => {
                         </Button>
                       </span>
                     </div>
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-          </tbody>
+          </TableBody>
         </Table>
       </div>
       <ModalCommon

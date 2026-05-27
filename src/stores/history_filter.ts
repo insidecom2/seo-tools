@@ -9,7 +9,7 @@ interface HistoryFilterState {
 }
 
 export const useHistoryFilterStore = create<HistoryFilterState>((set) => ({
-  symbol: "BNBUSDT",
+  symbol: "BTCUSDT",
   monthYear: dayjs().format("YYYY-MM"),
   update: (value) =>
     set(() => ({ symbol: value.symbol, monthYear: value.monthYear })),

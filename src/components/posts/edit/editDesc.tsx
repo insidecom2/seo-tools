@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button } from "@/src/components/ui/button";
+import { Input } from "@/src/components/ui/input";
 import TinyEditor from "../../common/tinyEditor";
 import useUpdateById from "../hooks/useUpdate";
 
@@ -36,27 +37,31 @@ export const EditDescription = ({
 
   return (
     <div>
-      <h4>Edit Description</h4>
-      <Form.Group className="mb-3">
-        <Form.Label>Title</Form.Label>
-        <Form.Control
+      <h4 className="mb-4 text-lg font-semibold">Edit Description</h4>
+      <div className="mb-3">
+        <label className="mb-2 block text-sm font-medium text-slate-700">
+          Title
+        </label>
+        <Input
           type="text"
           placeholder="Enter title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Description</Form.Label>
+      </div>
+      <div>
+        <label className="mb-2 block text-sm font-medium text-slate-700">
+          Description
+        </label>
         <TinyEditor value={content} onChange={setContent} />
         <Button
-          variant={"primary"}
-          style={{ marginTop: 16 }}
+          variant="primary"
+          className="mt-4"
           onClick={handleSubmit}
         >
           Save
         </Button>
-      </Form.Group>
+      </div>
     </div>
   );
 };

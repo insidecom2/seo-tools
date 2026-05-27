@@ -8,6 +8,12 @@ interface UploadIconProps {
 
 export const UploadIcon = ({ allowType, setFile }: UploadIconProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const accept = allowType
+    ? allowType
+        .split(",")
+        .map((type) => `.${type.trim()}`)
+        .join(",")
+    : "*/*";
 
   const handleUploadFile = () => {
     fileInputRef.current?.click();
@@ -18,7 +24,7 @@ export const UploadIcon = ({ allowType, setFile }: UploadIconProps) => {
       <input
         ref={fileInputRef}
         type="file"
-        accept={allowType ? `${allowType}/*` : "*/*"}
+        accept={accept}
         style={{ display: "none" }}
         onChange={setFile}
       />

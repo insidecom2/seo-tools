@@ -1,7 +1,14 @@
 import { IObject } from "@/src/interface/object";
 import { DateTimeConvert } from "@/src/utils/datetime";
 import { CurrencyFormat } from "@/src/utils/format";
-import { Table } from "react-bootstrap";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/src/components/ui/table";
 
 export const TableLists = ({ currentData }: { currentData: IObject[] }) => {
   const redIncome = (val: number) => {
@@ -13,33 +20,33 @@ export const TableLists = ({ currentData }: { currentData: IObject[] }) => {
 
   return (
     <div className="pt-2">
-      <div className="tableContainer">
-        <Table striped bordered hover responsive className="customTable">
-          <thead className="tableHead">
-            <tr>
-              <th style={{ width: "50px" }}>#</th>
-              <th>Symbol</th>
-              <th>DateTime</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody>
+      <div className="tableContainer overflow-x-auto">
+        <Table className="customTable">
+          <TableHeader className="tableHead">
+            <TableRow>
+              <TableHead style={{ width: "50px" }}>#</TableHead>
+              <TableHead>Symbol</TableHead>
+              <TableHead>DateTime</TableHead>
+              <TableHead>Value</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {currentData &&
               currentData.map((row, index) => (
-                <tr key={row.time} className="tableRow">
-                  <td className="indexCell">{index + 1}</td>
-                  <td className="symbolCell">{row.symbol}</td>
-                  <td className="dateCell">
+                <TableRow key={row.time} className="tableRow">
+                  <TableCell className="indexCell">{index + 1}</TableCell>
+                  <TableCell className="symbolCell">{row.symbol}</TableCell>
+                  <TableCell className="dateCell">
                     {DateTimeConvert(row.time as string, "DD/MM/YYYY HH:mm:ss")}
-                  </td>
-                  <td className="valueCell">
+                  </TableCell>
+                  <TableCell className="valueCell">
                     {parseFloat(row.totalIncome as string) > 0
                       ? greenIncome(parseFloat(row.totalIncome as string))
                       : redIncome(parseFloat(row.totalIncome as string))}
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-          </tbody>
+          </TableBody>
         </Table>
       </div>
     </div>

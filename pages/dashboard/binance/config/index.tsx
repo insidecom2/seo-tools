@@ -1,18 +1,15 @@
 import { BinanceSetting } from "@/src/components/binance/config/Setting";
 import NavbarTop from "@/src/components/nav";
-import { Col, Container, Row } from "react-bootstrap";
 
 const BinanceConfig = () => {
   return (
     <div>
       <NavbarTop />
-      <Container className="py-2 py-md-5 h-100">
-        <Row className="row d-flex justify-content-center align-items-center h-100">
-          <Col md={8}>
-            <BinanceSetting />
-          </Col>
-        </Row>
-      </Container>
+      <main className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 sm:py-8">
+        <div className="mx-auto w-full max-w-5xl">
+          <BinanceSetting />
+        </div>
+      </main>
     </div>
   );
 };

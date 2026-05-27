@@ -17,7 +17,7 @@ export const PostsPagination = ({ pagination }: PostsPaginationProps) => {
     if (pagination) {
       init(pagination);
     }
-  }, [pagination]);
+  }, [init, pagination]);
 
   const handleChange = (p: number) => {
     if (p >= 1 && p <= totalPage) {

@@ -1,7 +1,8 @@
 import { useModalStore } from "@/src/stores/modal";
 import { useEffect, useRef, useState } from "react";
-import { Button, Form, FormControl } from "react-bootstrap";
 import { FaFloppyDisk, FaGear, FaPlus, FaTrash } from "react-icons/fa6";
+import { Button } from "@/src/components/ui/button";
+import { Input } from "@/src/components/ui/input";
 import { LoadingIcon } from "../../common/loading";
 import ModalCommon from "../../common/modal";
 import { CreateSetting } from "./Create";
@@ -38,14 +39,14 @@ export const BinanceSetting = () => {
 
   useEffect(() => {
     getList();
-  }, []);
+  }, [getList]);
 
   useEffect(() => {
     if (createdResult) {
       setClose();
       getList();
     }
-  }, [createdResult]);
+  }, [createdResult, getList, setClose]);
 
   const deleteItem = async (key: string) => {
     await deleteData({ key });
@@ -63,18 +64,18 @@ export const BinanceSetting = () => {
           <h2 className="settingMinimalTitle">
             <FaGear /> Settings
           </h2>
-          <Button className="settingMinimalBtn" onClick={setShow}>
+          <Button className="settingMinimalBtn" onClick={setShow} variant="outline">
             <FaPlus /> Add
           </Button>
         </div>
 
-        <Form onSubmit={(e) => handleSubmit(e)} className="settingMinimalForm">
+        <form onSubmit={(e) => handleSubmit(e)} className="settingMinimalForm">
           <div className="settingMinimalList">
             {lists?.map((list) => {
               return (
                 <div key={list.f_key} className="settingMinimalRow">
                   <div className="settingMinimalKey">{list.f_key}</div>
-                  <FormControl
+                  <Input
                     ref={(el) => {
                       refs.current[list.f_key] = el;
                     }}
@@ -100,7 +101,7 @@ export const BinanceSetting = () => {
               <FaFloppyDisk /> Save
             </Button>
           </div>
-        </Form>
+        </form>
 
         <ModalCommon
           Compo={<CreateSetting setResult={setCreatedResult} />}
