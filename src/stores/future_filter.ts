@@ -14,11 +14,11 @@ interface FutureFilterState {
 }
 
 export const useFutureFilterStore = create<FutureFilterState>((set) => ({
-  symbol: 'BNBUSDT',
+  symbol: "BTCUSDT",
   page: 1,
   limit: 50,
-  type: 'XGB',
-  entry: '',
+  type: "XGB",
+  entry: "",
   reload: false,
   updateSymbol: (value) => set(() => ({ symbol: value.symbol })),
   updatePage: (value) => set(() => ({ page: value.page })),

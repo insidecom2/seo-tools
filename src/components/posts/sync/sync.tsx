@@ -1,7 +1,7 @@
 import { syncStatus } from "@/src/enums/syncStatus";
+import { Button } from "@/src/components/ui/button";
 import { SyncStatus } from "@/src/types/syncStatus";
-import { useEffect, useState } from "react";
-import { ListGroup } from "react-bootstrap";
+import { useEffect, useMemo, useState } from "react";
 import { FaCheck, FaRotate } from "react-icons/fa6";
 import { useSync } from "./hooks/useSync";
 
@@ -26,15 +26,18 @@ export default function Sync({
   googleBusiness,
   title,
 }: syncProps) {
-  const items: SyncOption[] = [
-    { key: "facebook", label: "Facebook", status: facebook },
-    { key: "website", label: "Website", status: website },
-    {
-      key: "google_business",
-      label: "Google Business",
-      status: googleBusiness,
-    },
-  ];
+  const items: SyncOption[] = useMemo(
+    () => [
+      { key: "facebook", label: "Facebook", status: facebook },
+      { key: "website", label: "Website", status: website },
+      {
+        key: "google_business",
+        label: "Google Business",
+        status: googleBusiness,
+      },
+    ],
+    [facebook, googleBusiness, website],
+  );
 
   const [spinning, setSpinning] = useState<Record<string, boolean>>({});
   const syncPost = useSync(id);
@@ -47,7 +50,7 @@ export default function Sync({
         : (initialSpinning[it.key] = false);
     });
     setSpinning(initialSpinning);
-  }, [id]);
+  }, [items]);
 
   const onHandleSync = async (type: string) => {
     if (spinning[type]) return;
@@ -61,21 +64,22 @@ export default function Sync({
 
   return (
     <div>
-      <h5 className="mb-3">Title : {title}</h5>
-      <ListGroup>
+      <h5 className="mb-3 text-lg font-semibold">Title : {title}</h5>
+      <div className="overflow-hidden rounded-md border border-slate-200">
         {items.map((it) => (
-          <ListGroup.Item
+          <div
             key={it.key}
-            className="d-flex justify-content-between align-items-center"
+            className="flex items-center justify-between border-b border-slate-200 px-4 py-3 last:border-b-0"
           >
-            <div>{it.label}</div>
+            <div className="text-sm font-medium text-slate-800">{it.label}</div>
             <div>
               {it.status === "completed" ? (
-                <FaCheck className="text-success" />
+                <FaCheck className="text-emerald-600" />
               ) : (
-                <button
+                <Button
                   type="button"
-                  className="btn btn-link p-0"
+                  variant="ghost"
+                  size="sm"
                   onClick={() =>
                     onHandleSync(
                       (it.key as string) === "facebook"
@@ -88,14 +92,14 @@ export default function Sync({
                   aria-label={`retry-${it.key}`}
                 >
                   <FaRotate
-                    className={`text-secondary ${spinning[it.key] || it.status == syncStatus.IN_PROGRESS ? "spin" : ""}`}
+                    className={`${spinning[it.key] || it.status == syncStatus.IN_PROGRESS ? "spin text-slate-700" : "text-slate-500"}`}
                   />
-                </button>
+                </Button>
               )}
             </div>
-          </ListGroup.Item>
+          </div>
         ))}
-      </ListGroup>
+      </div>
     </div>
   );
 }

@@ -1,12 +1,12 @@
 import { HTTP_STATUS_CODE } from "@/src/utils/constants";
 import Http from "@/src/utils/http";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export const useLists = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [lists, setLists] = useState(null);
 
-  const getList = async () => {
+  const getList = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await Http.get(`/api/binance/setting`);
@@ -17,7 +17,7 @@ export const useLists = () => {
     } catch (error) {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   return { getList, isLoading, lists };
 };

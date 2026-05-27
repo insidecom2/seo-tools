@@ -1,6 +1,6 @@
 import { HTTP_STATUS_CODE } from "@/src/utils/constants";
 import Http from "@/src/utils/http";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { symbol } from "joi";
 
 interface IBinanceLog {
@@ -12,7 +12,7 @@ const useFutureLogs = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [lists, setLists] = useState(null);
   const [pagination, setPagination] = useState(null);
-  const getLogs = async ({ symbol, page, limit }: IBinanceLog) => {
+  const getLogs = useCallback(async ({ symbol, page, limit }: IBinanceLog) => {
     try {
       setIsLoading(true);
       const response: any = await Http.get(
@@ -26,7 +26,7 @@ const useFutureLogs = () => {
     } catch (error) {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   return { isLoading, getLogs, lists, pagination };
 };

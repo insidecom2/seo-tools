@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useRef } from "react";
-import { Button, FormControl } from "react-bootstrap";
 import { FaFloppyDisk, FaGear, FaKey } from "react-icons/fa6";
+import { Button } from "@/src/components/ui/button";
+import { Input } from "@/src/components/ui/input";
 import { LoadingIcon } from "../../common/loading";
 import { useCreate } from "./hooks/useCreate";
 
@@ -39,7 +40,7 @@ export const CreateSetting = ({
           <label className="createFormLabel">
             <FaKey /> Key
           </label>
-          <FormControl
+          <Input
             ref={(el) => {
               refs.current["key"] = el;
             }}
@@ -54,7 +55,7 @@ export const CreateSetting = ({
           <label className="createFormLabel">
             <FaGear /> Value
           </label>
-          <FormControl
+          <Input
             ref={(el) => {
               refs.current["config"] = el;
             }}

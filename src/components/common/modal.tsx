@@ -1,6 +1,7 @@
-import { ReactNode } from "react";
-import { Modal } from "react-bootstrap";
-import { useModalStore } from "../../stores/modal";
+import { ReactNode } from 'react';
+
+import { Dialog, DialogBody, DialogClose, DialogContent, DialogHeader, DialogTitle } from '@/src/components/ui/dialog';
+import { useModalStore } from '../../stores/modal';
 
 interface IModal {
   Compo: ReactNode;
@@ -11,20 +12,14 @@ export default function ModalCommon(props: IModal) {
   const { isShow, setClose } = useModalStore();
 
   return (
-    <>
-      <Modal
-        show={isShow}
-        onHide={setClose}
-        centered
-        size="lg"
-        enforceFocus={false} // ⭐ KEY FIX
-        restoreFocus={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{Compo}</Modal.Body>
-      </Modal>
-    </>
+    <Dialog open={isShow} onOpenChange={(open) => !open && setClose()}>
+      <DialogContent className="max-h-[85vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogClose />
+        </DialogHeader>
+        <DialogBody>{Compo}</DialogBody>
+      </DialogContent>
+    </Dialog>
   );
 }

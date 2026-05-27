@@ -1,8 +1,8 @@
 "use client";
 import { AlertComm } from "@/src/components/common/alert";
+import { Badge } from "@/src/components/ui/badge";
 import { usePostsFilterState } from "@/src/stores/post_filter";
 import { useMemo } from "react";
-import { Badge, Container } from "react-bootstrap";
 import { FaList } from "react-icons/fa6";
 import { LoadingIcon } from "../../common/loading";
 import useGetLists from "../hooks/useGetLists";
@@ -24,7 +24,7 @@ export const PostsListsComm = () => {
 
   return (
     <div className="postsListMinimal">
-      <Container className="postsListContainer">
+      <div className="postsListContainer mx-auto w-full max-w-7xl px-4 py-4 sm:px-6">
         <div className="postsListHeader">
           <h1 className="postsListTitle">
             <FaList /> Posts
@@ -35,7 +35,7 @@ export const PostsListsComm = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Badge>Download Video</Badge>
+              <Badge variant="info">Download Video</Badge>
             </a>{" "}
             {data?.pagination?.totalAll || 0} total posts
           </p>
@@ -48,7 +48,7 @@ export const PostsListsComm = () => {
         <div className="postsListFooter">
           <PostsPagination pagination={data?.pagination} />
         </div>
-      </Container>
+      </div>
 
       <AlertComm />
     </div>

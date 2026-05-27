@@ -1,8 +1,9 @@
 import { useHistoryFilterStore } from "@/src/stores/history_filter";
+import { BarChart3 } from "lucide-react";
 import { CurrencyFormat, DecimalFormat } from "@/src/utils/format";
 import { useEffect } from "react";
-import { Card, Col, Row } from "react-bootstrap";
 import { FaArrowUp, FaCheck, FaWallet } from "react-icons/fa6";
+import { Card, CardContent } from "@/src/components/ui/card";
 import { LoadingIcon } from "../../common/loading";
 import { Filter } from "./filter";
 import useHistory from "./hook/useHistory";
@@ -15,7 +16,7 @@ const BinanceHistoryComm = () => {
   useEffect(() => {
     if (symbol && monthYear)
       getPositionHistory({ symbol: symbol, monthYear: monthYear });
-  }, [symbol, monthYear]);
+  }, [getPositionHistory, monthYear, symbol]);
 
   const balance = lists?.funding + lists?.totalPnL;
   const funding = lists?.funding ?? 0;
@@ -28,7 +29,9 @@ const BinanceHistoryComm = () => {
   return (
     <div className="pt-3">
       <div className="historyHeader">
-        <h2 className="historyTitle">📈 Trading History</h2>
+        <h2 className="historyTitle">
+          <BarChart3 className="h-5 w-5" /> Trading History
+        </h2>
         <Filter />
       </div>
 
@@ -36,10 +39,10 @@ const BinanceHistoryComm = () => {
         <LoadingIcon />
       ) : (
         <>
-          <Row className="mb-4 g-3">
-            <Col xs={12} md={6} lg={3}>
+          <div className="mb-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            <div>
               <Card className="statCard">
-                <Card.Body>
+                <CardContent>
                   <div className="statContent">
                     <div className="statIcon balance">
                       <FaWallet />
@@ -54,13 +57,13 @@ const BinanceHistoryComm = () => {
                       </div>
                     </div>
                   </div>
-                </Card.Body>
+                </CardContent>
               </Card>
-            </Col>
+            </div>
 
-            <Col xs={12} md={6} lg={3}>
+            <div>
               <Card className="statCard">
-                <Card.Body>
+                <CardContent>
                   <div className="statContent">
                     <div className="statIcon funding">
                       <FaArrowUp />
@@ -70,13 +73,13 @@ const BinanceHistoryComm = () => {
                       <div className="statValue">{CurrencyFormat(funding)}</div>
                     </div>
                   </div>
-                </Card.Body>
+                </CardContent>
               </Card>
-            </Col>
+            </div>
 
-            <Col xs={12} md={6} lg={3}>
+            <div>
               <Card className="statCard">
-                <Card.Body>
+                <CardContent>
                   <div className="statContent">
                     <div className="statIcon profit">
                       <FaArrowUp />
@@ -90,13 +93,13 @@ const BinanceHistoryComm = () => {
                       </div>
                     </div>
                   </div>
-                </Card.Body>
+                </CardContent>
               </Card>
-            </Col>
+            </div>
 
-            <Col xs={12} md={6} lg={3}>
+            <div>
               <Card className="statCard">
-                <Card.Body>
+                <CardContent>
                   <div className="statContent twoStats">
                     <div className="twoStatItem">
                       <div className="statIcon winRate">
@@ -117,10 +120,10 @@ const BinanceHistoryComm = () => {
                       </div>
                     </div>
                   </div>
-                </Card.Body>
+                </CardContent>
               </Card>
-            </Col>
-          </Row>
+            </div>
+          </div>
 
           <TableLists currentData={lists?.histories} />
         </>

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import NavbarTop from "@/src/components/nav";
+import { Button } from "@/src/components/ui/button";
+import { Input } from "@/src/components/ui/input";
 import { HTTP_STATUS_CODE } from "@/src/utils/constants";
 import Http from "@/src/utils/http";
 
@@ -47,63 +48,63 @@ export default function Tracking() {
   };
   return (
     <div>
-      <NavbarTop></NavbarTop>
-      <Container className=" py-5 h-100">
-        <Row className="row d-flex justify-content-center align-items-center h-100">
-          <Col md={6}>
-            <h2>Tracking Keyword</h2>
-            <Form onSubmit={(e) => handleSubmit(e)}>
-              <Form.Group
-                className="form-outline mb-4"
-                controlId="formBasicEmail"
+      <NavbarTop />
+      <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6">
+        <div className="mx-auto w-full max-w-2xl rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="mb-6 text-2xl font-semibold text-slate-900">
+            Tracking Keyword
+          </h2>
+          <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
+            <div className="space-y-2">
+              <label
+                className="block text-sm font-medium text-slate-700"
+                htmlFor="keyword"
               >
-                <Form.Label>Keyword</Form.Label>
-                <Form.Control
-                  name="keyword"
-                  type="text"
-                  required
-                  placeholder="Enter keyword"
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group
-                className="form-outline mb-4"
-                controlId="formBasicPassword"
+                Keyword
+              </label>
+              <Input
+                id="keyword"
+                name="keyword"
+                type="text"
+                required
+                placeholder="Enter keyword"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="space-y-2">
+              <label
+                className="block text-sm font-medium text-slate-700"
+                htmlFor="url"
               >
-                <Form.Label>Url</Form.Label>
-                <Form.Control
-                  name="url"
-                  type="text"
-                  required
-                  onChange={handleChange}
-                  placeholder="Enter url"
-                />
-              </Form.Group>
+                Url
+              </label>
+              <Input
+                id="url"
+                name="url"
+                type="text"
+                required
+                onChange={handleChange}
+                placeholder="Enter url"
+              />
+            </div>
 
-              <Button variant="info" className="w-50" type="submit">
-                Search
-              </Button>
-              <div className="py-4">
-                Result :{" "}
-                {isLoading && (
-                  <span>
-                    <Spinner
-                      as="span"
-                      variant="success"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                      animation="border"
-                    />{" "}
-                    Loading
-                  </span>
-                )}
-                {!isLoading && position}
-              </div>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
+            <Button variant="primary" className="w-full sm:w-1/2" type="submit">
+              Search
+            </Button>
+            <div className="py-2 text-sm text-slate-700">
+              Result:{" "}
+              {isLoading ? (
+                <span className="inline-flex items-center gap-2">
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-slate-900" />
+                  Loading
+                </span>
+              ) : (
+                position
+              )}
+            </div>
+          </form>
+        </div>
+      </main>
     </div>
   );
 }
