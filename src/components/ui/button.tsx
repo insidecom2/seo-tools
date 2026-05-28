@@ -4,17 +4,21 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        primary: 'border border-slate-900 bg-slate-900 text-white hover:bg-slate-800',
+        primary:
+          'border border-primary bg-primary text-primary-foreground hover:opacity-90',
 
-        secondary: 'border border-slate-200 bg-slate-100 text-slate-900 hover:bg-slate-200',
+        secondary:
+          'border border-border bg-secondary text-secondary-foreground hover:bg-accent',
 
-        outline: 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-50',
+        outline:
+          'border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground',
 
-        ghost: 'bg-transparent text-slate-700 hover:bg-slate-100',
+        ghost:
+          'bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground',
 
         destructive: 'border border-red-600 bg-red-600 text-white hover:bg-red-700',
       },

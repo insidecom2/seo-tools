@@ -1,4 +1,5 @@
 import QueryProviders from '@/src/providers/provider';
+import { ThemeProvider } from '@/src/providers/theme-provider';
 import { AppProps } from 'next/app';
 import Router from 'next/router';
 import NProgress from 'nprogress'; //nprogress module
@@ -10,9 +11,11 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <QueryProviders>
-      <Component {...pageProps} />
-    </QueryProviders>
+    <ThemeProvider>
+      <QueryProviders>
+        <Component {...pageProps} />
+      </QueryProviders>
+    </ThemeProvider>
   );
 }
 

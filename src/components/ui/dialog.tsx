@@ -73,14 +73,14 @@ function DialogContent({
       <button
         type="button"
         aria-label="Close dialog"
-        className="absolute inset-0 bg-slate-950/20"
+        className="absolute inset-0 bg-black/40"
         onClick={() => onOpenChange(false)}
       />
       <div
         role="dialog"
         aria-modal="true"
         className={cn(
-          'relative z-10 w-full max-w-2xl rounded-md border border-slate-200 bg-white shadow-sm',
+          'relative z-10 w-full max-w-2xl rounded-md border border-border bg-card text-card-foreground shadow-sm',
           className,
         )}
         {...props}
@@ -98,7 +98,7 @@ function DialogHeader({
   return (
     <div
       className={cn(
-        'flex items-start justify-between gap-4 border-b border-slate-200 px-5 py-4',
+        'flex items-start justify-between gap-4 border-b border-border px-5 py-4',
         className,
       )}
       {...props}
@@ -108,7 +108,7 @@ function DialogHeader({
 
 function DialogTitle({ className, ...props }: React.ComponentProps<'h2'>) {
   return (
-    <h2 className={cn('text-lg font-semibold text-slate-900', className)} {...props} />
+    <h2 className={cn('text-lg font-semibold text-card-foreground', className)} {...props} />
   );
 }
 
@@ -117,7 +117,7 @@ function DialogDescription({
   ...props
 }: React.ComponentProps<'p'>) {
   return (
-    <p className={cn('text-sm text-slate-500', className)} {...props} />
+    <p className={cn('text-sm text-muted-foreground', className)} {...props} />
   );
 }
 
@@ -136,7 +136,7 @@ function DialogClose({
     <button
       type="button"
       className={cn(
-        'inline-flex h-9 w-9 items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-900',
+        'inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition hover:bg-accent hover:text-accent-foreground',
         className,
       )}
       onClick={() => onOpenChange(false)}

@@ -17,6 +17,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 
 import { Button } from '@/src/components/ui/button';
+import ThemeToggle from '@/src/components/theme-toggle';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -99,11 +100,11 @@ export default function NavbarTop() {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         <Link href="/dashboard" passHref legacyBehavior>
-          <a className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-200 bg-slate-50 text-slate-700">
+          <a className="inline-flex items-center gap-2 text-sm font-semibold text-foreground">
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-muted text-muted-foreground">
               <BarChart3 className="h-4 w-4" />
             </span>
             <span>Dashboard</span>
@@ -112,8 +113,8 @@ export default function NavbarTop() {
 
         <nav className="hidden items-center gap-2 md:flex">
           <Link href="/dashboard/binance/history" passHref legacyBehavior>
-            <a className="inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
-              <History className="h-4 w-4 text-slate-400" />
+            <a className="inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium text-muted-foreground transition hover:bg-accent hover:text-accent-foreground">
+              <History className="h-4 w-4 text-muted-foreground" />
               <span>History</span>
             </a>
           </Link>
@@ -123,27 +124,27 @@ export default function NavbarTop() {
                 {group.label}
                 <ChevronDown className="h-4 w-4 text-slate-400" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="mt-3 min-w-[22rem] rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
-                <div className="border-b border-slate-100 px-3 py-2">
-                  <div className="text-sm font-semibold text-slate-900">
+              <DropdownMenuContent className="mt-3 min-w-[22rem] rounded-xl p-2 shadow-sm">
+                <div className="border-b border-border px-3 py-2">
+                  <div className="text-sm font-semibold text-foreground">
                     {group.label}
                   </div>
-                  <div className="mt-1 text-xs text-slate-500">
+                  <div className="mt-1 text-xs text-muted-foreground">
                     {group.description}
                   </div>
                 </div>
                 <div className="grid gap-1 p-1">
                 {group.items.map((item) => (
                   <Link key={item.href} href={item.href} passHref legacyBehavior>
-                    <a className="flex items-start gap-3 rounded-lg px-3 py-3 transition hover:bg-slate-50">
-                      <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-slate-50 text-slate-600">
+                    <a className="flex items-start gap-3 rounded-lg px-3 py-3 transition hover:bg-accent">
+                      <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-border bg-muted text-muted-foreground">
                         <item.icon className="h-4 w-4" />
                       </span>
                       <span className="min-w-0">
-                        <span className="block text-sm font-medium text-slate-900">
+                        <span className="block text-sm font-medium text-foreground">
                           {item.label}
                         </span>
-                        <span className="mt-0.5 block text-xs leading-5 text-slate-500">
+                        <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
                           {item.description}
                         </span>
                       </span>
@@ -157,7 +158,8 @@ export default function NavbarTop() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <div className="inline-flex items-center gap-2 rounded-md border border-slate-200 px-3 py-2 text-sm text-slate-700">
+          <ThemeToggle />
+          <div className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-muted-foreground">
             <User className="h-4 w-4" />
             <span>{userData?.name || 'User'}</span>
           </div>
@@ -184,16 +186,16 @@ export default function NavbarTop() {
       </div>
 
       {mobileOpen ? (
-        <div className="border-t border-slate-200 bg-white md:hidden">
+        <div className="border-t border-border bg-background md:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6">
             <Link href="/dashboard/binance/history" passHref legacyBehavior>
-              <a className="flex items-start gap-3 rounded-lg border border-slate-200 bg-white px-3 py-3 text-sm text-slate-700 transition hover:bg-slate-50 hover:text-slate-900">
-                <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-slate-50 text-slate-600">
+              <a className="flex items-start gap-3 rounded-lg border border-border bg-card px-3 py-3 text-sm text-muted-foreground transition hover:bg-accent hover:text-accent-foreground">
+                <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-border bg-muted text-muted-foreground">
                   <History className="h-4 w-4" />
                 </span>
                 <span className="min-w-0">
-                  <span className="block font-medium text-slate-900">History</span>
-                  <span className="mt-0.5 block text-xs leading-5 text-slate-500">
+                  <span className="block font-medium text-foreground">History</span>
+                  <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
                     Funding, PnL, and win-rate summary
                   </span>
                 </span>
@@ -202,23 +204,23 @@ export default function NavbarTop() {
             {navGroups.map((group) => (
               <div key={group.label} className="space-y-2">
                 <div className="space-y-1">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     {group.label}
                   </div>
-                  <div className="text-xs text-slate-500">{group.description}</div>
+                  <div className="text-xs text-muted-foreground">{group.description}</div>
                 </div>
                 <div className="flex flex-col gap-1">
                   {group.items.map((item) => (
                     <Link key={item.href} href={item.href} passHref legacyBehavior>
-                      <a className="flex items-start gap-3 rounded-lg border border-slate-200 bg-white px-3 py-3 text-sm text-slate-700 transition hover:bg-slate-50 hover:text-slate-900">
-                        <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-slate-50 text-slate-600">
+                      <a className="flex items-start gap-3 rounded-lg border border-border bg-card px-3 py-3 text-sm text-muted-foreground transition hover:bg-accent hover:text-accent-foreground">
+                        <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-border bg-muted text-muted-foreground">
                           <item.icon className="h-4 w-4" />
                         </span>
                         <span className="min-w-0">
-                          <span className="block font-medium text-slate-900">
+                          <span className="block font-medium text-foreground">
                             {item.label}
                           </span>
-                          <span className="mt-0.5 block text-xs leading-5 text-slate-500">
+                          <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
                             {item.description}
                           </span>
                         </span>
@@ -228,15 +230,20 @@ export default function NavbarTop() {
                 </div>
               </div>
             ))}
-            <div className="flex items-center justify-between gap-3 border-t border-slate-200 pt-4">
-              <div className="inline-flex min-w-0 items-center gap-2 text-sm text-slate-700">
-                <User className="h-4 w-4 shrink-0" />
-                <span className="truncate">{userData?.name || 'User'}</span>
+            <div className="flex flex-col gap-3 border-t border-border pt-4">
+              <div className="flex items-center justify-between gap-3">
+                <div className="inline-flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
+                  <User className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{userData?.name || 'User'}</span>
+                </div>
+                <ThemeToggle />
               </div>
-              <Button variant="outline" size="sm" onClick={handleLogout}>
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-              </Button>
+              <div>
+                <Button variant="outline" size="sm" onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </Button>
+              </div>
             </div>
           </div>
         </div>
