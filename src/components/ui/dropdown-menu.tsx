@@ -81,7 +81,7 @@ function DropdownMenuTrigger({
       ref={triggerRef}
       aria-expanded={open}
       className={cn(
-        'inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900',
+        'inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition hover:bg-accent hover:text-accent-foreground',
         className,
       )}
       onClick={() => setOpen((current) => !current)}
@@ -108,7 +108,7 @@ function DropdownMenuContent({
     <div
       ref={contentRef}
       className={cn(
-        'absolute top-full z-50 mt-2 min-w-48 rounded-md border border-slate-200 bg-white p-1 shadow-lg',
+        'absolute top-full z-50 mt-2 min-w-48 rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-lg',
         align === 'end' ? 'right-0' : 'left-0',
         className,
       )}
@@ -131,7 +131,7 @@ function DropdownMenuItem({
     <button
       type="button"
       className={cn(
-        'flex w-full items-center rounded-sm px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-100 hover:text-slate-900',
+        'flex w-full items-center rounded-sm px-3 py-2 text-left text-sm text-muted-foreground transition hover:bg-accent hover:text-accent-foreground',
         className,
       )}
       onClick={(event) => {

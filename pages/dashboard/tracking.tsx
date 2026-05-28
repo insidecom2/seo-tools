@@ -50,14 +50,14 @@ export default function Tracking() {
     <div>
       <NavbarTop />
       <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6">
-        <div className="mx-auto w-full max-w-2xl rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="mb-6 text-2xl font-semibold text-slate-900">
+        <div className="mx-auto w-full max-w-2xl rounded-lg border border-border bg-card p-6 text-card-foreground shadow-sm">
+          <h2 className="mb-6 text-2xl font-semibold text-card-foreground">
             Tracking Keyword
           </h2>
           <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
             <div className="space-y-2">
               <label
-                className="block text-sm font-medium text-slate-700"
+                className="block text-sm font-medium text-muted-foreground"
                 htmlFor="keyword"
               >
                 Keyword
@@ -73,7 +73,7 @@ export default function Tracking() {
             </div>
             <div className="space-y-2">
               <label
-                className="block text-sm font-medium text-slate-700"
+                className="block text-sm font-medium text-muted-foreground"
                 htmlFor="url"
               >
                 Url
@@ -91,11 +91,11 @@ export default function Tracking() {
             <Button variant="primary" className="w-full sm:w-1/2" type="submit">
               Search
             </Button>
-            <div className="py-2 text-sm text-slate-700">
+            <div className="py-2 text-sm text-muted-foreground">
               Result:{" "}
               {isLoading ? (
                 <span className="inline-flex items-center gap-2">
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-slate-900" />
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-border border-t-foreground" />
                   Loading
                 </span>
               ) : (

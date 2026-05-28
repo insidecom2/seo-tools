@@ -1,6 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
 
+import ThemeToggle from "@/src/components/theme-toggle";
+
 export default function Home() {
   return (
     <>
@@ -21,14 +23,21 @@ export default function Home() {
           alignItems: "center",
           justifyContent: "center",
           padding: "2rem",
-          backgroundColor: "#f5f7fb",
+          backgroundColor: "hsl(var(--background))",
+          color: "hsl(var(--foreground))",
+          position: "relative",
         }}
       >
+        <div style={{ position: "absolute", top: 24, right: 24 }}>
+          <ThemeToggle />
+        </div>
         <section
           style={{
             width: "100%",
             maxWidth: 760,
-            background: "#fff",
+            background: "hsl(var(--card))",
+            color: "hsl(var(--card-foreground))",
+            border: "1px solid hsl(var(--border))",
             borderRadius: 12,
             padding: "2rem",
             boxShadow: "0 8px 24px rgba(0, 0, 0, 0.08)",
@@ -42,6 +51,7 @@ export default function Home() {
               fontSize: "1rem",
               lineHeight: 1.6,
               marginBottom: "1.25rem",
+              color: "hsl(var(--muted-foreground))",
             }}
           >
             This application support core SEO reporting and tracking features.
@@ -67,8 +77,8 @@ export default function Home() {
                   display: "inline-block",
                   padding: "0.65rem 1rem",
                   borderRadius: 8,
-                  backgroundColor: "#2563eb",
-                  color: "#fff",
+                  backgroundColor: "hsl(var(--primary))",
+                  color: "hsl(var(--primary-foreground))",
                   textDecoration: "none",
                   fontWeight: 600,
                 }}
@@ -83,8 +93,8 @@ export default function Home() {
                   display: "inline-block",
                   padding: "0.65rem 1rem",
                   borderRadius: 8,
-                  border: "1px solid #d1d5db",
-                  color: "#111827",
+                  border: "1px solid hsl(var(--border))",
+                  color: "hsl(var(--foreground))",
                   textDecoration: "none",
                   fontWeight: 600,
                 }}
@@ -99,8 +109,8 @@ export default function Home() {
                   display: "inline-block",
                   padding: "0.65rem 1rem",
                   borderRadius: 8,
-                  border: "1px solid #d1d5db",
-                  color: "#111827",
+                  border: "1px solid hsl(var(--border))",
+                  color: "hsl(var(--foreground))",
                   textDecoration: "none",
                   fontWeight: 600,
                 }}
@@ -114,9 +124,9 @@ export default function Home() {
             style={{
               marginTop: "1.5rem",
               paddingTop: "1rem",
-              borderTop: "1px solid #e5e7eb",
+              borderTop: "1px solid hsl(var(--border))",
               fontSize: "0.95rem",
-              color: "#374151",
+              color: "hsl(var(--muted-foreground))",
               lineHeight: 1.7,
             }}
           >
@@ -124,7 +134,7 @@ export default function Home() {
               Contact Us Email:{" "}
               <a
                 href="mailto:lumsumsolution@gmail.com"
-                style={{ color: "#2563eb", textDecoration: "none" }}
+                style={{ color: "hsl(var(--primary))", textDecoration: "none" }}
               >
                 lumsumsolution@gmail.com
               </a>
@@ -133,7 +143,7 @@ export default function Home() {
               Tel:{" "}
               <a
                 href="tel:+660909442826"
-                style={{ color: "#2563eb", textDecoration: "none" }}
+                style={{ color: "hsl(var(--primary))", textDecoration: "none" }}
               >
                 +660909442826
               </a>

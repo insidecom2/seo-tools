@@ -62,27 +62,42 @@ export default function Login() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: '#f7f7f8',
+      background: 'hsl(var(--background))',
       padding: '12px',
     },
     card: {
       width: '100%',
       maxWidth: 420,
-      background: '#fff',
+      background: 'hsl(var(--card))',
       padding: 28,
       borderRadius: 12,
+      border: '1px solid hsl(var(--border))',
+      color: 'hsl(var(--card-foreground))',
       boxShadow: '0 6px 18px rgba(0,0,0,0.08)',
       boxSizing: 'border-box',
     },
-    title: { margin: 0, marginBottom: 18, fontSize: 20, textAlign: 'center' },
-    label: { display: 'block', fontSize: 13, marginBottom: 6, color: '#333' },
+    title: {
+      margin: 0,
+      marginBottom: 18,
+      fontSize: 20,
+      textAlign: 'center',
+      color: 'hsl(var(--foreground))',
+    },
+    label: {
+      display: 'block',
+      fontSize: 13,
+      marginBottom: 6,
+      color: 'hsl(var(--foreground))',
+    },
     input: {
       width: '100%',
       padding: '10px 12px',
       borderRadius: 8,
-      border: '1px solid #e6e6e9',
+      border: '1px solid hsl(var(--input))',
       marginBottom: 14,
       fontSize: 14,
+      background: 'hsl(var(--background))',
+      color: 'hsl(var(--foreground))',
       boxSizing: 'border-box',
     },
     checkboxRow: {
@@ -104,7 +119,7 @@ export default function Login() {
     buttonDisabled: { opacity: 0.6, cursor: 'default' },
     alert: {
       marginTop: 12,
-      color: '#c53030',
+      color: '#dc2626',
       textAlign: 'center',
       fontSize: 14,
     },
@@ -122,7 +137,7 @@ export default function Login() {
       cursor: 'pointer',
       fontSize: 18,
       padding: 0,
-      color: '#666',
+      color: 'hsl(var(--muted-foreground))',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -181,7 +196,9 @@ export default function Login() {
             onChange={handleChange}
             checked={formData.rememberPassword === 1}
           />
-          <label htmlFor="remember">Remember password</label>
+          <label htmlFor="remember" style={{ color: 'hsl(var(--foreground))' }}>
+            Remember password
+          </label>
         </div>
         <Button
           type="submit"

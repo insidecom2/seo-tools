@@ -21,7 +21,7 @@ function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
   return (
     <tr
       className={cn(
-        'border-b border-slate-200 transition-colors hover:bg-slate-50',
+        'border-b border-border transition-colors hover:bg-muted/50',
         className,
       )}
       {...props}
@@ -33,7 +33,7 @@ function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
   return (
     <th
       className={cn(
-        'h-11 px-4 text-left align-middle text-xs font-semibold uppercase tracking-wide text-slate-600',
+        'h-11 px-4 text-left align-middle text-xs font-semibold uppercase tracking-wide text-muted-foreground',
         className,
       )}
       {...props}
@@ -49,7 +49,7 @@ function TableCaption({
   className,
   ...props
 }: React.ComponentProps<'caption'>) {
-  return <caption className={cn('mt-4 text-sm text-slate-500', className)} {...props} />;
+  return <caption className={cn('mt-4 text-sm text-muted-foreground', className)} {...props} />;
 }
 
 export {
