@@ -44,7 +44,7 @@ export const FutureXgbLogsComm = () => {
       <div className="flex items-center justify-between gap-3 pb-3">
         <div className="shrink-0">
           <Button
-            onClick={() => changePageStep('left')}
+            onClick={() => changePageStep("left")}
             className="btnPagination"
             variant="outline"
             size="sm"
@@ -54,7 +54,7 @@ export const FutureXgbLogsComm = () => {
         </div>
         <div className="flex flex-1 flex-wrap items-center gap-2 px-2">
           <h2 className="text-lg font-semibold">
-              Future Logs ({page}/{pagination?.page_all})
+            Future Logs ({page}/{pagination?.page_all})
           </h2>
           <h2 className="text-lg font-semibold">
             Total : {DecimalFormat(pagination?.all, 0)}
@@ -62,7 +62,7 @@ export const FutureXgbLogsComm = () => {
         </div>
         <div className="shrink-0 text-right">
           <Button
-            onClick={() => changePageStep('right')}
+            onClick={() => changePageStep("right")}
             className="btnPagination"
             variant="outline"
             size="sm"
@@ -78,10 +78,11 @@ export const FutureXgbLogsComm = () => {
         <Table className="customTable min-w-[1100px]">
           <TableHeader className="tableHead">
             <TableRow>
-              <TableHead style={{ width: '50px' }}>#</TableHead>
+              <TableHead style={{ width: "50px" }}>#</TableHead>
               <TableHead>Symbol</TableHead>
               <TableHead>DateTime</TableHead>
               <TableHead>Label</TableHead>
+              <TableHead>Raw Label</TableHead>
               <TableHead>Confidence</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Exp Pct</TableHead>
@@ -95,13 +96,13 @@ export const FutureXgbLogsComm = () => {
             {lists &&
               lists.map((row, index) => {
                 const body = JSON.parse(row.body_json);
-                const labelExpected = ['BUY', 'SELL'].includes(body.label);
+                const labelExpected = ["BUY", "SELL"].includes(body.label);
                 const isHighConfidence = labelExpected;
                 return (
                   <TableRow
                     key={row.timestamp}
                     className={
-                      isHighConfidence ? 'tableRow xgbSignalRow' : 'tableRow'
+                      isHighConfidence ? "tableRow xgbSignalRow" : "tableRow"
                     }
                   >
                     <TableCell className="indexCell">
@@ -119,7 +120,7 @@ export const FutureXgbLogsComm = () => {
                     <TableCell className="dateCell">
                       {DateTimeConvert(
                         row.timestamp as string,
-                        'DD/MM/YYYY HH:mm:ss',
+                        "DD/MM/YYYY HH:mm:ss",
                       )}
                     </TableCell>
                     <TableCell className="labelCell">
@@ -129,10 +130,13 @@ export const FutureXgbLogsComm = () => {
                         {body.label}
                       </span>
                     </TableCell>
+                    <TableCell className="trendCell">
+                      {body.raw_label}
+                    </TableCell>
                     <TableCell className="confidenceCell">
                       <span
                         className={`confidenceBadge ${
-                          parseFloat(body.confidence) >= 0.8 ? 'high' : 'low'
+                          parseFloat(body.confidence) >= 0.8 ? "high" : "low"
                         }`}
                       >
                         {(parseFloat(body.confidence) * 100).toFixed(1)}%
@@ -143,8 +147,8 @@ export const FutureXgbLogsComm = () => {
                       <span
                         className={`returnValue ${
                           parseFloat(body.expected_future_return_pct) >= 0
-                            ? 'positive'
-                            : 'negative'
+                            ? "positive"
+                            : "negative"
                         }`}
                       >
                         {parseFloat(body.expected_future_return_pct).toFixed(2)}
@@ -153,8 +157,8 @@ export const FutureXgbLogsComm = () => {
                     </TableCell>
                     <TableCell className="trendCell">{body.trend}</TableCell>
                     <TableCell className="trendCell">
-                      {body.entry_type == 'None' ? (
-                        '-'
+                      {body.entry_type == "None" ? (
+                        "-"
                       ) : (
                         <span className={`labelBadge buy`}>
                           {body.entry_type}
@@ -162,10 +166,10 @@ export const FutureXgbLogsComm = () => {
                       )}
                     </TableCell>
                     <TableCell className="trendCell">
-                      {DecimalFormat(body.adx) ?? '-'}
+                      {DecimalFormat(body.adx) ?? "-"}
                     </TableCell>
                     <TableCell className="trendCell">
-                      {DecimalFormat(body.rsi) ?? '-'}
+                      {DecimalFormat(body.rsi) ?? "-"}
                     </TableCell>
                   </TableRow>
                 );
@@ -176,7 +180,7 @@ export const FutureXgbLogsComm = () => {
       <div className="flex items-center justify-between gap-3 py-3">
         <div className="shrink-0">
           <Button
-            onClick={() => changePageStep('left')}
+            onClick={() => changePageStep("left")}
             className="btnPagination"
             variant="outline"
             size="sm"
@@ -186,7 +190,7 @@ export const FutureXgbLogsComm = () => {
         </div>
         <div className="flex flex-1 flex-wrap items-center gap-2 px-2">
           <h2 className="text-lg font-semibold">
-              Future Logs ({page}/{pagination?.page_all})
+            Future Logs ({page}/{pagination?.page_all})
           </h2>
           <h2 className="text-lg font-semibold">
             Total : {DecimalFormat(pagination?.all, 0)}
@@ -194,7 +198,7 @@ export const FutureXgbLogsComm = () => {
         </div>
         <div className="shrink-0 text-right">
           <Button
-            onClick={() => changePageStep('right')}
+            onClick={() => changePageStep("right")}
             className="btnPagination"
             variant="outline"
             size="sm"
