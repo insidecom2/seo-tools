@@ -54,19 +54,7 @@ const navGroups: NavGroup[] = [
         icon: Settings2,
       },
     ],
-  },
-  {
-    label: 'Posts',
-    description: 'Publishing operations',
-    items: [
-      {
-        href: '/dashboard/posts',
-        label: 'Lists',
-        description: 'Content sync, edit, and upload actions',
-        icon: FileText,
-      },
-    ],
-  },
+  }
 ];
 
 export default function NavbarTop() {
