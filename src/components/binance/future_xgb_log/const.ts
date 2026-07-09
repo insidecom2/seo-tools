@@ -1,4 +1,5 @@
 export const symbols = [
+  "TRXUSDT",
   "BNBUSDT",
   "XAUUSDT",
   "BTCUSDT",

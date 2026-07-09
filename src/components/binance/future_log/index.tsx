@@ -17,7 +17,7 @@ import useFutureLogs from "./hook/useLogs";
 export const FutureLogsComm = () => {
   const { getLogs, isLoading, lists, pagination } = useFutureLogs();
   const [paginationTable, setPaginationTable] = useState({
-    symbol: "BNBUSDT",
+    symbol: "TRXUSDT",
     page: 1,
     limit: 50,
   });
